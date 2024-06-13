@@ -1,0 +1,47 @@
+.carousel {
+    position: relative;
+    max-width: 100vw;
+    margin: 0 auto;
+    height: 62.2vh;
+}
+
+.carousel-content span {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 1rem;
+}
+
+.carousel-content h1 {
+    text-transform: capitalize;
+    letter-spacing: 0.8px;
+    font-size: 4rem;
+    line-height: 1.1;
+    background-color: #00a4aa;
+    background-image: linear-gradient(45deg, #00a4aa, #000);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.carousel-content p {
+    line-height: 1.6;
+}
+
+.myswiper {
+    width: 100%;
+    height: 100% !important;
+}
+
+.myswiper-slider {
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}
+
+.swiper-slide-active div {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+}
