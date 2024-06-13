@@ -20,11 +20,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPass']);
 Route::post('/reset-password', [AuthController::class, 'resetPass']);
 
+Route::get('two-factor-auth/resend', [AuthController::class, 'resend'])->middleware(['auth:sanctum']);
+Route::post('two-factor-auth/confirm', [AuthController::class, 'confirm2fa'])->middleware(['auth:sanctum']);
+Route::get('two-factor-auth/setup', [AuthController::class, 'enable2fa'])->middleware(['auth:sanctum']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
+
 Route::group(['middleware' => ['auth:sanctum', '2faApi']], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('two-factor-auth/resend', [AuthController::class, 'resend']);
-    Route::post('two-factor-auth/confirm', [AuthController::class, 'confirm2fa']);
-    Route::get('two-factor-auth/setup', [AuthController::class, 'enable2fa']);
     Route::put('/option', [AuthController::class, 'updateSettings']);
     Route::get('me', [AuthController::class, 'me']);
     Route::put('/change-password', [AuthController::class, 'changePass']);

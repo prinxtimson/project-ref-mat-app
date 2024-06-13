@@ -3,7 +3,7 @@
 
 Hi {{ $name }},
 
-You are receiving this email because you initiated a login attempt on Tritek. Your Two-Factor Authentication code is: #{{$code}} 
+You are receiving this email because you initiated a login attempt on Tritek. Your Two-Factor Authentication code is: # {{$code}} 
 
 Please enter this code on the login page to complete the authentication process.
 
