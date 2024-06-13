@@ -1,0 +1,76 @@
+{
+  "node_modules/primeicons/fonts/primeicons.eot": {
+    "file": "assets/primeicons-987f23ea.eot",
+    "src": "node_modules/primeicons/fonts/primeicons.eot"
+  },
+  "node_modules/primeicons/fonts/primeicons.svg": {
+    "file": "assets/primeicons-36c54cec.svg",
+    "src": "node_modules/primeicons/fonts/primeicons.svg"
+  },
+  "node_modules/primeicons/fonts/primeicons.ttf": {
+    "file": "assets/primeicons-dc895fee.ttf",
+    "src": "node_modules/primeicons/fonts/primeicons.ttf"
+  },
+  "node_modules/primeicons/fonts/primeicons.woff": {
+    "file": "assets/primeicons-f5d1d219.woff",
+    "src": "node_modules/primeicons/fonts/primeicons.woff"
+  },
+  "node_modules/primeicons/fonts/primeicons.woff2": {
+    "file": "assets/primeicons-9eea6e0b.woff2",
+    "src": "node_modules/primeicons/fonts/primeicons.woff2"
+  },
+  "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-300.woff": {
+    "file": "assets/lato-v17-latin-ext_latin-300-6b4d0c29.woff",
+    "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-300.woff"
+  },
+  "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-300.woff2": {
+    "file": "assets/lato-v17-latin-ext_latin-300-6081b8c8.woff2",
+    "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-300.woff2"
+  },
+  "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-700.woff": {
+    "file": "assets/lato-v17-latin-ext_latin-700-66bdd962.woff",
+    "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-700.woff"
+  },
+  "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-700.woff2": {
+    "file": "assets/lato-v17-latin-ext_latin-700-f254eb93.woff2",
+    "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-700.woff2"
+  },
+  "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-regular.woff": {
+    "file": "assets/lato-v17-latin-ext_latin-regular-8badcd60.woff",
+    "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-regular.woff"
+  },
+  "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-regular.woff2": {
+    "file": "assets/lato-v17-latin-ext_latin-regular-a3cf4861.woff2",
+    "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-regular.woff2"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-ce71afa5.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "assets": [
+      "assets/lato-v17-latin-ext_latin-300-6081b8c8.woff2",
+      "assets/lato-v17-latin-ext_latin-300-6b4d0c29.woff",
+      "assets/lato-v17-latin-ext_latin-regular-a3cf4861.woff2",
+      "assets/lato-v17-latin-ext_latin-regular-8badcd60.woff",
+      "assets/lato-v17-latin-ext_latin-700-f254eb93.woff2",
+      "assets/lato-v17-latin-ext_latin-700-66bdd962.woff",
+      "assets/primeicons-987f23ea.eot",
+      "assets/primeicons-9eea6e0b.woff2",
+      "assets/primeicons-f5d1d219.woff",
+      "assets/primeicons-dc895fee.ttf",
+      "assets/primeicons-36c54cec.svg"
+    ],
+    "css": [
+      "assets/app-ce71afa5.css"
+    ],
+    "file": "assets/app-b0f76b28.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-14204e20.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}
