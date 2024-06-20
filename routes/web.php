@@ -41,6 +41,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/search', function () {
+    return view('welcome');
+});
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('profile', function () {
@@ -51,4 +55,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return view('welcome');
     })->name('change-password');
 
+    Route::get('request-reference', function () {
+        return view('welcome');
+    })->name('request-reference');
+
+    Route::get('cancel-reference', function () {
+        return view('welcome');
+    })->name('cancel-reference');
+
+    Route::get('reference-tracking', function () {
+        return view('welcome');
+    })->name('reference-tracking');
+
+    Route::get('data-deletion', function () {
+        return view('welcome');
+    })->name('data-deletion');
+
+    Route::get('data-access', function () {
+        return view('welcome');
+    })->name('data-access');
 });

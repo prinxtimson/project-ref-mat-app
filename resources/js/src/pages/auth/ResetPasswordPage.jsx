@@ -39,7 +39,7 @@ const ResetPasswordPage = () => {
                 severity: "error",
                 summary: "Error",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
         }
 
@@ -48,7 +48,7 @@ const ResetPasswordPage = () => {
                 severity: "success",
                 summary: "Success",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
             setData({
                 token: "",

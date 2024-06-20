@@ -27,7 +27,7 @@ const ForgotPasswordPage = () => {
                 severity: "error",
                 summary: "Error",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
         }
 
@@ -36,7 +36,7 @@ const ForgotPasswordPage = () => {
                 severity: "success",
                 summary: "Success",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
             setData({
                 email: "",

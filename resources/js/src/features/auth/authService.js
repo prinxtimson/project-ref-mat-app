@@ -65,6 +65,11 @@ const updateOptions = async (data) => {
     return res.data;
 };
 
+const dataDelete = async () => {
+    const res = await axios.delete(API_URL + "/delete");
+    return res.data;
+};
+
 const authService = {
     register,
     logout,
@@ -78,6 +83,7 @@ const authService = {
     changeEmail,
     getCurrentUser,
     updateOptions,
+    dataDelete,
 };
 
 export default authService;

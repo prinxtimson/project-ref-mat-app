@@ -37,6 +37,11 @@ import TwoFactorAuthSetupPage from "./pages/auth/TwoFactorAuthSetupPage";
 import NavigateSetter from "./utils/NavigateSetter";
 import ChangePasswordPage from "./pages/dashboard/ChangePasswordPage";
 import SearchPage from "./pages/dashboard/SearchPage";
+import RequestReferencePage from "./pages/dashboard/RequestReferencePage";
+import CancelReferencePage from "./pages/dashboard/CancelReferencePage";
+import ReferenceTrackingPage from "./pages/dashboard/ReferenceTrackingPage";
+import DataDeletionPage from "./pages/dashboard/DataDeletionPage";
+import DataAccessRequestPage from "./pages/dashboard/DataAccessRequestPage";
 
 const App = () => {
     const [user, setUser] = useState(store.getState().auth.user);
@@ -129,6 +134,46 @@ const App = () => {
                         element={
                             <AuthRoute>
                                 <ProfilePage />
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="request-reference"
+                        element={
+                            <AuthRoute>
+                                <RequestReferencePage />
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="cancel-reference"
+                        element={
+                            <AuthRoute>
+                                <CancelReferencePage />
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="reference-tracking"
+                        element={
+                            <AuthRoute>
+                                <ReferenceTrackingPage />
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="data-deletion"
+                        element={
+                            <AuthRoute>
+                                <DataDeletionPage />
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
+                        path="data-access"
+                        element={
+                            <AuthRoute>
+                                <DataAccessRequestPage />
                             </AuthRoute>
                         }
                     />

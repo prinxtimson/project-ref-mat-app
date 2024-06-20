@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DataDeletionMail;
 use App\Mail\PasswordResetEmail;
 use App\Models\Option;
 use App\Models\User;
@@ -52,7 +53,7 @@ class AuthController extends Controller
 
             $token = $user->createToken('access_token')->plainTextToken;
 
-            if(isset($user->is_2fa_enable)){
+            if($user->is_2fa_enable == '1'){
                 $user->send_token();
             }
 
@@ -321,7 +322,7 @@ class AuthController extends Controller
 
         $deleted = $user->forceDelete();
 
-        //Mail::to($user)->send(new UserDelete($user->profile));
+        Mail::to($user)->send(new DataDeletionMail($user->profile));
 
         return response()->json([
             "status" => $deleted,

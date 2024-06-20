@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CandidateDataController;
+use App\Http\Controllers\CandidateReferenceController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,9 +32,21 @@ Route::group(['middleware' => ['auth:sanctum', '2faApi']], function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::put('/change-password', [AuthController::class, 'changePass']);
     Route::post('/update', [AuthController::class, 'update']);
-    Route::delete('/delete', [AuthController::class, 'delete']);
+    Route::delete('/delete', [AuthController::class, 'destroy']);
 
     Route::get('notifications', [NotificationController::class, 'get']);
     Route::get('notifications/mark', [NotificationController::class, 'mark']);
 
+});
+
+Route::group(['middleware' => ['auth:sanctum', '2faApi'], 'prefix' => 'reference'], function () {
+    Route::get('/', [CandidateReferenceController::class, 'index'])->name('ref.index');
+    Route::get('/my', [CandidateReferenceController::class, 'getUserReferences'])->name('ref.my');
+    Route::post('/', [CandidateReferenceController::class, 'store'])->name('ref.create');
+    Route::put('/cancel', [CandidateReferenceController::class, 'cancelReferenceRequest'])->name('ref.cancel');
+    Route::post('/upload', [CandidateReferenceController::class, 'uploadFile'])->name('ref.upload');
+});
+
+Route::group(['middleware' => ['auth:sanctum', '2faApi'], 'prefix' => 'data-access'], function () {
+    Route::post('/', [CandidateDataController::class, 'send_data_access'])->name('ref.access');
 });

@@ -1,15 +1,6 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
-::before,
-::after {
-    box-sizing: border-box;
-    border-width: 0;
-    border-style: solid;
-    border-color: #e5e7eb;
-}
-
 body {
     font-family: "Rubik", "Roboto", sans-serif;
     min-height: 100%;

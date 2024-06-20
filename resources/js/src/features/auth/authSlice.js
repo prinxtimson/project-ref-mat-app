@@ -229,6 +229,27 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     return await authService.logout();
 });
 
+export const dataDelete = createAsyncThunk(
+    "auth/delete-account",
+    async (data, thunkAPI) => {
+        try {
+            return await authService.dataDelete();
+        } catch (err) {
+            if (err.response.status === 401) {
+                thunkAPI.dispatch(clearUser());
+            }
+            const msg =
+                (err.response &&
+                    err.response.data &&
+                    err.response.data.message) ||
+                err.message ||
+                err.toString();
+
+            return thunkAPI.rejectWithValue(msg);
+        }
+    }
+);
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -259,6 +280,22 @@ export const authSlice = createSlice({
                 state.message = action.payload.message;
             })
             .addCase(register.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(dataDelete.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(dataDelete.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.isAuthenticated = false;
+                state.user = null;
+                state.type = action.type;
+                state.message = "Data deletion successful";
+            })
+            .addCase(dataDelete.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

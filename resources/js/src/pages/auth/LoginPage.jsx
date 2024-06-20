@@ -41,7 +41,7 @@ const LoginPage = () => {
                 severity: "error",
                 summary: "Error",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
         }
 
@@ -85,9 +85,7 @@ const LoginPage = () => {
                                 iconPosition="left"
                                 className="p-float-label"
                             >
-                                <InputIcon className="pi pi-envelope">
-                                    {" "}
-                                </InputIcon>
+                                <InputIcon className="pi pi-envelope"></InputIcon>
                                 <InputText
                                     name="email"
                                     value={email}

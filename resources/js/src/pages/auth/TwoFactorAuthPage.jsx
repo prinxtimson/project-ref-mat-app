@@ -49,7 +49,7 @@ const TwoFactorAuthPage = () => {
                 severity: "error",
                 summary: "Error",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
         }
 
@@ -58,7 +58,7 @@ const TwoFactorAuthPage = () => {
                 severity: "success",
                 summary: "Success",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
             setData({
                 code: "",

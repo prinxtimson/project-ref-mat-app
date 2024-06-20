@@ -29,7 +29,7 @@ const ChangePasswordPage = () => {
                 severity: "error",
                 summary: "Error",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
         }
 
@@ -38,7 +38,7 @@ const ChangePasswordPage = () => {
                 severity: "success",
                 summary: "Success",
                 detail: message,
-                life: 3000,
+                life: 5000,
             });
             setData({
                 current_password: "",

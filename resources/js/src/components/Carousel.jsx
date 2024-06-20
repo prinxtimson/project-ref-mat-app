@@ -49,35 +49,41 @@ const Carousel = () => {
                                 <Button
                                     label="Request Reference"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() =>
+                                        navigate("/request-reference")
+                                    }
                                     tooltip="Click here to initiate a reference request"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Cancel Reference"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() =>
+                                        navigate("/cancel-reference")
+                                    }
                                     tooltip="Click here to proceed with cancellation"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Track Reference"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() =>
+                                        navigate("/reference-tracking")
+                                    }
                                     tooltip="Track the status of your reference requests here!"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Data Deletion Request"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() => navigate("/data-deletion")}
                                     tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Data Subject Access Request"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() => navigate("/data-access")}
                                     tooltip="Click here to request access to your personal data stored on our platform"
                                     tooltipOptions={{ position: "left" }}
                                 />
@@ -113,35 +119,41 @@ const Carousel = () => {
                                 <Button
                                     label="Request Reference"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() =>
+                                        navigate("/request-reference")
+                                    }
                                     tooltip="Click here to initiate a reference request"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Cancel Reference"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() =>
+                                        navigate("/cancel-reference")
+                                    }
                                     tooltip="Click here to proceed with cancellation"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Track Reference"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() =>
+                                        navigate("/reference-tracking")
+                                    }
                                     tooltip="Track the status of your reference requests here!"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Data Deletion Request"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() => navigate("/data-deletion")}
                                     tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
                                     tooltipOptions={{ position: "left" }}
                                 />
                                 <Button
                                     label="Data Subject Access Request"
                                     className="tw-w-64"
-                                    // onClick={() => navigate("/login")}
+                                    onClick={() => navigate("/data-access")}
                                     tooltip="Click here to request access to your personal data stored on our platform"
                                     tooltipOptions={{ position: "left" }}
                                 />

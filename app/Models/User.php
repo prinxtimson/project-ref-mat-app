@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    public function candidate_references()
+    {
+        return $this->hasMany(CandidateReference::class);
+    }
+
     public function deleteDeviceToken()
     {
         return $this->update([
