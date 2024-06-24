@@ -77,7 +77,8 @@ class CandidateReferenceController extends Controller
 
         $name = $fields['firstname'] . ' ' . $fields['lastname'];
 
-        $ref = CandidateReference::where('name', $name)->where('created_at', $fields['date'])->where('user_id', auth()->id())->first();
+        if(!$ref = CandidateReference::where('name', $name)->where('created_at', $fields['date'])->where('user_id', auth()->id())->first())
+            return response(['message' => 'No reference request Found'], 404);
 
         $ref->delete();
 

@@ -1,5 +1,6 @@
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
 
 const StepThree = ({
     data,
@@ -58,6 +59,29 @@ const StepThree = ({
                         onChange={handleFileSelect}
                         value={data.cv}
                     />
+                </div>
+
+                <div className="tw-mb-4">
+                    <div className="field-checked tw-text-gray-900 tw-items-center">
+                        <Checkbox
+                            name="consent"
+                            value={consent}
+                            onChange={handleOnChange}
+                            checked={data.consent}
+                            className="tw-mr-2"
+                        />
+
+                        <label htmlFor="accept" className="">
+                            I agree to grant consent to Tritek to be in custody
+                            of my personal data.
+                        </label>
+                    </div>
+                </div>
+
+                <div className="tw-mb-4">
+                    <a href="http://lmstritek.co.uk/privacy-policy/">
+                        Read Privacy Policy
+                    </a>
                 </div>
 
                 <div className="tw-flex tw-items-center tw-justify-between">

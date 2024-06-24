@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import chatService from "./chatService";
+import postService from "./postService";
 
 const initialState = {
-    chat_messages: [],
+    posts: [],
+    post: null,
     type: "",
     isError: false,
     isSuccess: false,
@@ -10,9 +11,9 @@ const initialState = {
     message: "",
 };
 
-export const getChats = createAsyncThunk("chat/get", async (args, thunkAPI) => {
+export const getPosts = createAsyncThunk("post/get", async (args, thunkAPI) => {
     try {
-        return await chatService.getChats();
+        return await postService.getPosts(args);
     } catch (err) {
         const msg =
             (err.response && err.response.data && err.response.data.message) ||
@@ -23,11 +24,11 @@ export const getChats = createAsyncThunk("chat/get", async (args, thunkAPI) => {
     }
 });
 
-export const archiveChat = createAsyncThunk(
-    "chat/archive",
+export const favoritePost = createAsyncThunk(
+    "post/favorite",
     async (args, thunkAPI) => {
         try {
-            return await chatService.archiveChat(args);
+            return await postService.likeDislikePost(args);
         } catch (err) {
             const msg =
                 (err.response &&
@@ -41,11 +42,11 @@ export const archiveChat = createAsyncThunk(
     }
 );
 
-export const restoreChat = createAsyncThunk(
-    "chat/restore",
+export const createPost = createAsyncThunk(
+    "post/create",
     async (args, thunkAPI) => {
         try {
-            return await chatService.restoreChat(args);
+            return await postService.createPost(args);
         } catch (err) {
             const msg =
                 (err.response &&
@@ -59,11 +60,11 @@ export const restoreChat = createAsyncThunk(
     }
 );
 
-export const deleteChat = createAsyncThunk(
-    "chat/delete",
+export const editPost = createAsyncThunk(
+    "post/edit",
     async (args, thunkAPI) => {
         try {
-            return await chatService.deleteChat(args);
+            return await postService.editPost(args);
         } catch (err) {
             const msg =
                 (err.response &&
@@ -77,11 +78,11 @@ export const deleteChat = createAsyncThunk(
     }
 );
 
-export const sendMessage = createAsyncThunk(
-    "chat/send-message",
+export const archivePost = createAsyncThunk(
+    "post/archive",
     async (args, thunkAPI) => {
         try {
-            return await chatService.sendMessage(args);
+            return await postService.archivePost(args);
         } catch (err) {
             const msg =
                 (err.response &&
@@ -95,11 +96,11 @@ export const sendMessage = createAsyncThunk(
     }
 );
 
-export const readMessage = createAsyncThunk(
-    "chat/read-message",
+export const restorePost = createAsyncThunk(
+    "post/restore",
     async (args, thunkAPI) => {
         try {
-            return await chatService.readMessage();
+            return await postService.restorePost(args);
         } catch (err) {
             const msg =
                 (err.response &&
@@ -113,9 +114,27 @@ export const readMessage = createAsyncThunk(
     }
 );
 
-export const chatSlice = createSlice({
+export const deletePost = createAsyncThunk(
+    "post/delete",
+    async (args, thunkAPI) => {
+        try {
+            return await postService.deletePost(args);
+        } catch (err) {
+            const msg =
+                (err.response &&
+                    err.response.data &&
+                    err.response.data.message) ||
+                err.message ||
+                err.toString();
+
+            return thunkAPI.rejectWithValue(msg);
+        }
+    }
+);
+
+export const postSlice = createSlice({
     initialState,
-    name: "chat",
+    name: "post",
     reducers: {
         reset: (state) => {
             state.isError = false;
@@ -125,130 +144,157 @@ export const chatSlice = createSlice({
             state.type = "";
         },
         clear: (state) => {
-            state.chat_messages = [];
+            state.post = null;
+            state.posts = [];
             state.isError = false;
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
             state.type = "";
         },
-        onNewMessage: (state, action) => {
-            let index = state.chat_messages.findIndex(
-                (item) => item.id === action.payload.id
-            );
-            if (index > -1) {
-                state.chat_messages.splice(index, 1, action.payload);
-                state.chat_messages = [...state.chat_messages];
-            } else {
-                state.chat_messages = [...state.chat_messages, action.payload];
-            }
-        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getChats.pending, (state, action) => {
+            .addCase(getPosts.pending, (state, action) => {
                 state.isLoading = true;
                 state.type = action.type;
             })
-            .addCase(getChats.fulfilled, (state, action) => {
+            .addCase(getPosts.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.chat_messages = action.payload;
+                state.posts = action.payload;
                 state.type = action.type;
             })
-            .addCase(getChats.rejected, (state, action) => {
+            .addCase(getPosts.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.type = action.type;
                 state.message = action.payload;
             })
-            .addCase(sendMessage.pending, (state, action) => {
+            .addCase(favoritePost.pending, (state, action) => {
                 state.isLoading = true;
                 state.type = action.type;
             })
-            .addCase(sendMessage.fulfilled, (state, action) => {
+            .addCase(favoritePost.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.type = action.type;
-                let index = state.chat_messages.findIndex(
+                let index = state.posts.findIndex(
                     (item) => item.id === action.payload.id
                 );
-                if (index > -1) {
-                    state.chat_messages.splice(index, 1, action.payload);
-                    state.chat_messages = [...state.chat_messages];
-                } else {
-                    state.chat_messages = [
-                        ...state.chat_messages,
+                state.posts.splice(index, 1, action.payload);
+                state.posts = [...state.posts];
+                state.type = action.type;
+            })
+            .addCase(favoritePost.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.type = action.type;
+                state.message = action.payload;
+            })
+            .addCase(createPost.pending, (state, action) => {
+                state.isLoading = true;
+                state.type = action.type;
+            })
+            .addCase(createPost.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                if (action.payload.parent_id) {
+                    let index = state.posts.findIndex(
+                        (item) => item.id === action.payload.parent_id
+                    );
+                    let currentPost = state.posts[index];
+                    currentPost.replies = [
+                        ...currentPost.replies,
                         action.payload,
                     ];
+                    state.posts.splice(index, 1, currentPost);
+                    state.posts = [...state.posts];
+                } else {
+                    state.posts = [...state.posts, action.payload];
                 }
+
+                state.type = action.type;
+                state.message = "Comment added successful!";
             })
-            .addCase(sendMessage.rejected, (state, action) => {
+            .addCase(createPost.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.type = action.type;
                 state.message = action.payload;
             })
-            .addCase(readMessage.pending, (state, action) => {
-                state.type = action.type;
-            })
-            .addCase(readMessage.fulfilled, (state, action) => {
-                state.type = action.type;
-            })
-            .addCase(readMessage.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.type = action.type;
-                state.message = action.payload;
-            })
-            .addCase(deleteChat.pending, (state, action) => {
+            .addCase(editPost.pending, (state, action) => {
                 state.isLoading = true;
                 state.type = action.type;
             })
-            .addCase(deleteChat.fulfilled, (state, action) => {
+            .addCase(editPost.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                let data = state.chat_messages.filter(
+                let index = state.posts.findIndex(
+                    (item) => item.id === action.payload.id
+                );
+                state.posts.splice(index, 1, action.payload);
+                state.posts = [...state.posts];
+                state.type = action.type;
+                state.message = "Comment edited successful!";
+            })
+            .addCase(editPost.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.type = action.type;
+                state.message = action.payload;
+            })
+            .addCase(archivePost.pending, (state, action) => {
+                state.isLoading = true;
+                state.type = action.type;
+            })
+            .addCase(archivePost.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                let data = state.posts.filter(
                     (item) => item.id !== action.payload.id
                 );
-                state.chat_messages = data;
+                state.posts = [...data];
                 state.type = action.type;
+                state.message = "Post archive successful!";
             })
-            .addCase(deleteChat.rejected, (state, action) => {
+            .addCase(archivePost.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.type = action.type;
                 state.message = action.payload;
             })
-            .addCase(archiveChat.pending, (state, action) => {
+            .addCase(restorePost.pending, (state, action) => {
                 state.isLoading = true;
                 state.type = action.type;
             })
-            .addCase(archiveChat.fulfilled, (state, action) => {
+            .addCase(restorePost.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                let data = state.chat_messages.filter(
+                state.posts = [...state.posts, action.payload];
+                state.type = action.type;
+                state.message = "Comment restored successful!";
+            })
+            .addCase(restorePost.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.type = action.type;
+                state.message = action.payload;
+            })
+            .addCase(deletePost.pending, (state, action) => {
+                state.isLoading = true;
+                state.type = action.type;
+            })
+            .addCase(deletePost.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                let data = state.posts.filter(
                     (item) => item.id !== action.payload.id
                 );
-                state.chat_messages = data;
+                state.posts = [...data];
                 state.type = action.type;
+                state.message = "Post deleted successful!";
             })
-            .addCase(archiveChat.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.type = action.type;
-                state.message = action.payload;
-            })
-            .addCase(restoreChat.pending, (state, action) => {
-                state.isLoading = true;
-                state.type = action.type;
-            })
-            .addCase(restoreChat.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                state.type = action.type;
-            })
-            .addCase(restoreChat.rejected, (state, action) => {
+            .addCase(deletePost.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.type = action.type;
@@ -257,5 +303,5 @@ export const chatSlice = createSlice({
     },
 });
 
-export const { reset, clear, onNewMessage } = chatSlice.actions;
-export default chatSlice.reducer;
+export const { reset, clear } = postSlice.actions;
+export default postSlice.reducer;

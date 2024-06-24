@@ -53,14 +53,23 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                 </div>
                 <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
                     <label htmlFor="date_joined">Date Joined *</label>
-                    <Calendar
+                    <input
+                        type="date"
+                        name="date_joined"
+                        value={data.date_joined}
+                        onChange={handleOnChange}
+                        placeholder="Select Date"
+                        required
+                        className="p-inputtext"
+                    />
+                    {/* <Calendar
                         name="date_joined"
                         value={data.date_joined}
                         onChange={handleOnChange}
                         showIcon
                         placeholder="Select Date"
                         required
-                    />
+                    /> */}
                 </div>
                 <div className="tw-flex tw-items-center tw-justify-between">
                     <Button label="Ok" className="tw-w-40" />

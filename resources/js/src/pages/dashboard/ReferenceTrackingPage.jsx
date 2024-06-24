@@ -61,9 +61,7 @@ const ReferenceTrackingPage = () => {
         <AppContainer toast={toastRef}>
             <div className="tw-grow tw-p-3 md:tw-p-6 tw-bg-white">
                 <div className="tw-text-center tw-mb-6">
-                    <h1 className="tw-my-0">
-                        Cancel Candidate Reference Application
-                    </h1>
+                    <h1 className="tw-my-0">Track Reference</h1>
                 </div>
 
                 <div className="tw-rounded-lg tw-shadow-md">
@@ -82,16 +80,8 @@ const ReferenceTrackingPage = () => {
                         <Column field="id" header="ID"></Column>
                         <Column field="name" header="Candidate Name"></Column>
                         <Column
-                            field="recruiter_name"
-                            header="Recruiter Name"
-                        ></Column>
-                        <Column
-                            field="position"
-                            header="Position Held"
-                        ></Column>
-                        <Column
                             field="status"
-                            header="Satus"
+                            header="Status"
                             body={statusBodyTemplate}
                         ></Column>
                         <Column

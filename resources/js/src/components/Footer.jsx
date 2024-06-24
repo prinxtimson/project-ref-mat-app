@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div className="tw-p-2 md:tw-p-5 tw-bg-yellow-400 tw-text-indigo-700 tw-flex tw-flex-col tw-items-center tw-justify-center">
+        <div
+            className="tw-p-2 md:tw-p-5 tw-flex tw-flex-col tw-items-center tw-justify-center"
+            style={{ backgroundColor: "#ccae2c", color: "#293986" }}
+        >
             <div className=" tw-max-w-[1024px] tw-w-full tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-5">
                 <div className="tw-flex tw-flex-col tw-gap-4">
                     <div className="tw-p-3 tw-bg-white tw-w-fit">

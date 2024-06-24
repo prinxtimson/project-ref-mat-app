@@ -35,7 +35,7 @@ const Carousel = () => {
                     slideShadows: true,
                 }}
                 autoplay={{
-                    delay: 3000,
+                    delay: 5000,
                     disableOnInteraction: false,
                 }}
             >
@@ -45,48 +45,148 @@ const Carousel = () => {
                 >
                     <div className="">
                         {user ? (
-                            <div className="tw-grow tw-flex tw-flex-col tw-justify-evenly tw-items-end tw-px-6">
-                                <Button
-                                    label="Request Reference"
-                                    className="tw-w-64"
-                                    onClick={() =>
-                                        navigate("/request-reference")
-                                    }
-                                    tooltip="Click here to initiate a reference request"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Cancel Reference"
-                                    className="tw-w-64"
-                                    onClick={() =>
-                                        navigate("/cancel-reference")
-                                    }
-                                    tooltip="Click here to proceed with cancellation"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Track Reference"
-                                    className="tw-w-64"
-                                    onClick={() =>
-                                        navigate("/reference-tracking")
-                                    }
-                                    tooltip="Track the status of your reference requests here!"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Data Deletion Request"
-                                    className="tw-w-64"
-                                    onClick={() => navigate("/data-deletion")}
-                                    tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Data Subject Access Request"
-                                    className="tw-w-64"
-                                    onClick={() => navigate("/data-access")}
-                                    tooltip="Click here to request access to your personal data stored on our platform"
-                                    tooltipOptions={{ position: "left" }}
-                                />
+                            <div className="tw-grow tw-flex tw-flex-row tw-justify-between">
+                                <div className=" tw-grow tw-flex tw-flex-col tw-justify-center tw-p-5 sm:tw-p-10 tw-text-white">
+                                    <h1 className=" tw-my-0">
+                                        Welcome {user.name}
+                                    </h1>
+                                </div>
+
+                                <div className=" tw-flex tw-flex-col tw-justify-evenly tw-items-en tw-px-6">
+                                    <Button
+                                        label="Request Reference"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/request-reference")
+                                        }
+                                        tooltip="Click here to initiate a reference request"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Cancel Reference"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/cancel-reference")
+                                        }
+                                        tooltip="Click here to proceed with cancellation"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Track Reference"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/reference-tracking")
+                                        }
+                                        tooltip="Track the status of your reference requests here!"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Data Deletion Request"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/data-deletion")
+                                        }
+                                        tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Data Subject Access Request"
+                                        className="tw-w-64"
+                                        onClick={() => navigate("/data-access")}
+                                        tooltip="Click here to request access to your personal data stored on our platform"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </div>
                             </div>
                         ) : (
                             <div className=" tw-grow tw-flex tw-flex-col tw-justify-end tw-items-center tw-p-5 sm:tw-p-10 tw-text-white">
@@ -115,48 +215,147 @@ const Carousel = () => {
                 >
                     <div className="">
                         {user ? (
-                            <div className="tw-grow tw-flex tw-flex-col tw-justify-evenly tw-items-end tw-px-6">
-                                <Button
-                                    label="Request Reference"
-                                    className="tw-w-64"
-                                    onClick={() =>
-                                        navigate("/request-reference")
-                                    }
-                                    tooltip="Click here to initiate a reference request"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Cancel Reference"
-                                    className="tw-w-64"
-                                    onClick={() =>
-                                        navigate("/cancel-reference")
-                                    }
-                                    tooltip="Click here to proceed with cancellation"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Track Reference"
-                                    className="tw-w-64"
-                                    onClick={() =>
-                                        navigate("/reference-tracking")
-                                    }
-                                    tooltip="Track the status of your reference requests here!"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Data Deletion Request"
-                                    className="tw-w-64"
-                                    onClick={() => navigate("/data-deletion")}
-                                    tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
-                                    tooltipOptions={{ position: "left" }}
-                                />
-                                <Button
-                                    label="Data Subject Access Request"
-                                    className="tw-w-64"
-                                    onClick={() => navigate("/data-access")}
-                                    tooltip="Click here to request access to your personal data stored on our platform"
-                                    tooltipOptions={{ position: "left" }}
-                                />
+                            <div className="tw-grow tw-flex tw-flex-row tw-justify-between">
+                                <div className=" tw-grow tw-flex tw-flex-col tw-justify-center tw-p-5 sm:tw-p-10 tw-text-white">
+                                    <h1 className=" tw-my-0">
+                                        Welcome {user.name}
+                                    </h1>
+                                </div>
+                                <div className=" tw-flex tw-flex-col tw-justify-evenly tw-items-end tw-px-6">
+                                    <Button
+                                        label="Request Reference"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/request-reference")
+                                        }
+                                        tooltip="Click here to initiate a reference request"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Cancel Reference"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/cancel-reference")
+                                        }
+                                        tooltip="Click here to proceed with cancellation"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Track Reference"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/reference-tracking")
+                                        }
+                                        tooltip="Track the status of your reference requests here!"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Data Deletion Request"
+                                        className="tw-w-64"
+                                        onClick={() =>
+                                            navigate("/data-deletion")
+                                        }
+                                        tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                    <Button
+                                        label="Data Subject Access Request"
+                                        className="tw-w-64"
+                                        onClick={() => navigate("/data-access")}
+                                        tooltip="Click here to request access to your personal data stored on our platform"
+                                        tooltipOptions={{
+                                            position: "left",
+                                            pt: {
+                                                text: {
+                                                    style: {
+                                                        color: "#000",
+                                                        backgroundColor:
+                                                            "whitesmoke",
+                                                        fontSize: 14,
+                                                        padding: 5,
+                                                    },
+                                                },
+                                                arrow: {
+                                                    style: {
+                                                        color: "whitesmoke",
+                                                    },
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </div>
                             </div>
                         ) : (
                             <div className=" tw-grow tw-flex tw-flex-col tw-justify-end tw-items-center tw-p-5 sm:tw-p-10 tw-text-white">

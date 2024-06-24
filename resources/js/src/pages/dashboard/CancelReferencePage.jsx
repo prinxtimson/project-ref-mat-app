@@ -22,7 +22,7 @@ const CancelReferencePage = () => {
     const dispatch = useDispatch();
 
     const { isLoading, isSuccess, isError, message } = useSelector(
-        (state) => state.auth
+        (state) => state.ref
     );
 
     useEffect(() => {
@@ -119,14 +119,23 @@ const CancelReferencePage = () => {
                             <label htmlFor="date" className="tw-text-gray-900">
                                 Request Date *
                             </label>
-                            <Calendar
+                            <input
+                                type="date"
+                                name="date"
+                                value={data.date}
+                                onChange={handleOnChange}
+                                placeholder="Select Date"
+                                required
+                                className="p-inputtext"
+                            />
+                            {/* <Calendar
                                 name="date"
                                 value={data.date}
                                 onChange={handleOnChange}
                                 showIcon
                                 placeholder="Select Date"
                                 required
-                            />
+                            /> */}
                         </div>
 
                         <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">

@@ -21,7 +21,7 @@ const RequestReferencePage = () => {
         email: "",
         phone_number: "",
         date_joined: "",
-        cv: null,
+        cv: "",
         recruiter_name: "",
         recruiter_email: "",
         position: "",
@@ -104,7 +104,7 @@ const RequestReferencePage = () => {
                         handleOnSuccessStoryUpload={handleOnSuccessStoryUpload}
                     />
                 );
-            case 2:
+            case 3:
                 return (
                     <StepThree
                         data={data}

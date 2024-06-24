@@ -71,7 +71,7 @@ const Header = () => {
         },
         {
             label: "Interaction",
-            command: () => navigate("/blogs"),
+            command: () => navigate("/interaction"),
             className: "tw-font-semibold",
         },
     ];

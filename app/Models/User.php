@@ -65,6 +65,10 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    public function chat_messages() {
+        return $this->hasMany(ChatMessage::class);
+    }
+
     public function candidate_references()
     {
         return $this->hasMany(CandidateReference::class);
@@ -89,5 +93,15 @@ class User extends Authenticatable
         } catch (Exception $e) {
             return response(['message' => $e->getMessage()], 400);
         }
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(PostLike::class);
     }
 }

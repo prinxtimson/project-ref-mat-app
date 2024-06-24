@@ -37,6 +37,10 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
+Route::get('ref-letter', function () {
+    return view('welcome');
+})->name('ref');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -50,6 +54,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('profile', function () {
         return view('welcome');
     })->name('profile');
+
+    Route::get('interection', function () {
+        return view('welcome');
+    })->name('interection');
 
     Route::get('change-password', function () {
         return view('welcome');
@@ -74,4 +82,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('data-access', function () {
         return view('welcome');
     })->name('data-access');
+
+    Route::group(['prefix' => 'interaction'], function () {
+        Route::get('', function () {
+            return view('welcome');
+        })->name('interaction');
+
+        Route::get('messaging', function () {
+            return view('welcome');
+        })->name('interaction.messaging');
+
+        Route::get('comments', function () {
+            return view('welcome');
+        })->name('interaction.comments');
+    });
 });

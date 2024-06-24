@@ -243,6 +243,25 @@ class AuthController extends Controller
         }
     }
 
+    public function disable2fa()
+    {
+        try{
+
+            $user = User::find(auth()->id());
+            $user->update([
+                'is_2fa_enable' => 0
+            ]);
+
+            $user->send_token();
+
+            return response()->json([
+                'message' => '2FA disabled successful'
+            ]);
+        } catch (Exception $e) {
+            return response(['message' => $e->getMessage()], 400);
+        }
+    }
+
     public function confirm2fa(Request $request)
     {
         $validated = $request->validate([

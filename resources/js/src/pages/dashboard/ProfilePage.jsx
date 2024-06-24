@@ -17,6 +17,7 @@ import axios from "axios";
 const ProfilePage = () => {
     const toastRef = useRef(null);
     const [inputRef, setInputRef] = useState(null);
+    const [visible, setVisible] = useState(false);
     const [checked, setChecked] = useState(false);
     const [file, setFile] = useState(null);
     const [data, setData] = useState({
@@ -102,28 +103,50 @@ const ProfilePage = () => {
 
     const handleOnChecked = (e) => {
         setChecked(e.value);
-        axios
-            .get("/api/two-factor-auth/setup")
-            .then(() => {
-                dispatch(getCurrentUser());
-                toastRef.current.show({
-                    severity: "success",
-                    summary: "Success",
-                    detail: `2FA ${
-                        e.value == true ? "enabled" : "disabled"
-                    } successfull`,
-                    life: 5000,
+        if (e.value) {
+            axios
+                .get("/api/two-factor-auth/setup")
+                .then((res) => {
+                    dispatch(getCurrentUser());
+                    toastRef.current.show({
+                        severity: "success",
+                        summary: "Success",
+                        detail: res.data.message,
+                        life: 5000,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toastRef.current.show({
+                        severity: "error",
+                        summary: "Error",
+                        detail: "An error occur",
+                        life: 5000,
+                    });
                 });
-            })
-            .catch((err) => {
-                console.log(err);
-                toastRef.current.show({
-                    severity: "error",
-                    summary: "Error",
-                    detail: "An error occur",
-                    life: 5000,
+        } else {
+            axios
+                .get("/api/two-factor-auth/disable")
+                .then((res) => {
+                    dispatch(getCurrentUser());
+                    toastRef.current.show({
+                        severity: "success",
+                        summary: "Success",
+                        detail: res.data.message,
+                        life: 5000,
+                    });
+                    n;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    toastRef.current.show({
+                        severity: "error",
+                        summary: "Error",
+                        detail: "An error occur",
+                        life: 5000,
+                    });
                 });
-            });
+        }
     };
 
     return (

@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidateDataController;
 use App\Http\Controllers\CandidateReferenceController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,7 @@ Route::group(['middleware' => ['auth:sanctum', '2faApi']], function () {
 
     Route::get('notifications', [NotificationController::class, 'get']);
     Route::get('notifications/mark', [NotificationController::class, 'mark']);
+    Route::get('two-factor-auth/disable', [AuthController::class, 'disable2fa']);
 
 });
 
@@ -49,4 +52,24 @@ Route::group(['middleware' => ['auth:sanctum', '2faApi'], 'prefix' => 'reference
 
 Route::group(['middleware' => ['auth:sanctum', '2faApi'], 'prefix' => 'data-access'], function () {
     Route::post('/', [CandidateDataController::class, 'send_data_access'])->name('ref.access');
+});
+
+Route::group(['prefix' => 'messages', 'middleware' => ['auth:sanctum', '2faApi']], function () {
+    Route::get('', [ChatMessageController::class, 'index'])->name('messages.index');
+    Route::get('show/{message}', [ChatMessageController::class, 'show'])->name('messages.show');
+    Route::post('', [ChatMessageController::class, 'store'])->name('messages.store');
+    Route::get('read', [ChatMessageController::class, 'markRead'])->name('messages.markRead');
+    Route::put('archive/{message}', [ChatMessageController::class, 'archiveChatMsg'])->name('messages.archive');
+    Route::put('restore/{message}', [ChatMessageController::class, 'restoreChatMsg'])->name('messages.restore');
+    Route::delete('delete/{message}', [ChatMessageController::class, 'deleteMessage'])->name('messages.delete');
+});
+
+Route::group(['prefix' => 'posts', 'middleware' => ['auth:sanctum', '2faApi']], function () {
+    Route::get('', [PostController::class, 'index'])->name('posts.index');
+    Route::get('{id}/favorite', [PostController::class, 'like_dislike'])->name('posts.fovorite');
+    Route::post('', [PostController::class, 'store'])->name('posts.store');
+    Route::put('{id}/update', [PostController::class, 'update'])->name('posts.update');
+    Route::put('{id}/archive', [PostController::class, 'delete'])->name('posts.archive');
+    Route::put('{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
+    Route::delete('{id}/delete', [PostController::class, 'destroy'])->name('posts.delete');
 });

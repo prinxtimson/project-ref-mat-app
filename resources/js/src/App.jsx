@@ -10,11 +10,7 @@ import "primeicons/primeicons.css"; //icons
 
 import { store } from "./store";
 import { getCurrentUser, logout } from "./features/auth/authSlice";
-import {
-    getMyChats,
-    onMessageRead,
-    onNewMessage,
-} from "./features/chat/chatSlice";
+import { getChats, onNewMessage } from "./features/chat/chatSlice";
 import {
     getNotification,
     onNewNotification,
@@ -30,7 +26,6 @@ import LoginPage from "./pages/auth/LoginPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import TwoFactorAuthPage from "./pages/auth/TwoFactorAuthPage";
-import DashboardHomePage from "./pages/dashboard/HomePage";
 import ProfilePage from "./pages/dashboard/ProfilePage";
 import NotificationPage from "./pages/dashboard/NotificationPage";
 import TwoFactorAuthSetupPage from "./pages/auth/TwoFactorAuthSetupPage";
@@ -42,6 +37,10 @@ import CancelReferencePage from "./pages/dashboard/CancelReferencePage";
 import ReferenceTrackingPage from "./pages/dashboard/ReferenceTrackingPage";
 import DataDeletionPage from "./pages/dashboard/DataDeletionPage";
 import DataAccessRequestPage from "./pages/dashboard/DataAccessRequestPage";
+import InteractionPage from "./pages/dashboard/InteractionPage";
+import MessagingPage from "./pages/dashboard/MessagingPage";
+import CommentsPage from "./pages/dashboard/CommentsPage";
+import RefLetterPage from "./pages/dashboard/RefLetterPage";
 
 const App = () => {
     const [user, setUser] = useState(store.getState().auth.user);
@@ -177,6 +176,7 @@ const App = () => {
                             </AuthRoute>
                         }
                     />
+                    <Route path="ref-letter" element={<RefLetterPage />} />
                     <Route
                         path="change-password"
                         element={
@@ -193,6 +193,33 @@ const App = () => {
                             </AuthRoute>
                         }
                     />
+                    <Route path="interaction">
+                        <Route
+                            path=""
+                            element={
+                                <AuthRoute>
+                                    <InteractionPage />
+                                </AuthRoute>
+                            }
+                        />
+                        <Route
+                            path="messaging"
+                            element={
+                                <AuthRoute>
+                                    <MessagingPage />
+                                </AuthRoute>
+                            }
+                        />
+
+                        <Route
+                            path="comments"
+                            element={
+                                <AuthRoute>
+                                    <CommentsPage />
+                                </AuthRoute>
+                            }
+                        />
+                    </Route>
                 </Routes>
             </BrowserRouter>
         </Provider>

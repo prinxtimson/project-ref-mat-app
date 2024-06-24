@@ -54,7 +54,7 @@ export default SearchPage;
 
 const SEARCHITEMS = [
     {
-        value: "TROUBLESHOOTING",
+        value: "Troubleshooting",
         icon: "pi pi-exclamation-triangle",
         title: "SUGGESTED STEPS TO RESOLVE TROUBLE SHOOTING",
         details: [
@@ -64,7 +64,7 @@ const SEARCHITEMS = [
         ],
     },
     {
-        value: "UNABLE TO UPLOAD DOCUMENTS",
+        value: "Unable to upload documents",
         title: "RECOMMENDED STEPS FOR RESOLVING UPLOAD ISSUES",
         icon: "pi pi-cloud-upload",
         details: [
@@ -74,7 +74,7 @@ const SEARCHITEMS = [
         ],
     },
     {
-        value: "ERROR SUBMITTING REQUEST",
+        value: "Error submitting request",
         title: "RECOMMENDED STEPS FOR ERROR SUBMITTING REQUEST",
         icon: "pi pi-question-circle",
         details: [
@@ -86,19 +86,19 @@ const SEARCHITEMS = [
         ],
     },
     {
-        value: "REFERENCE LETTER DECLINED",
+        value: "Reference letter declined",
         icon: "pi pi-file",
         title: "RECOMMENDED STEPS FOR REFERENCE LETTER DECLINED",
         details: ["Confirm Reasons", "Contact Admin", "Correct and Resubmit"],
     },
     {
-        value: "UPDATE EMPLOYER'S EMAIL",
+        value: "Update employer's email",
         icon: "pi pi-envelope",
         title: "RECOMMENDED STEPS TO UPDATE EMPLOYER'S EMAIL",
         details: ["Contact Support"],
     },
     {
-        value: "DELAYED NOTIFICATION OF REFERENCE SENT TO EMPLOYER",
+        value: "Delayed notification of reference sent to employer",
         icon: "pi pi-bell",
         title: "RECOMMENDED STEPS FOR DELAYED NOTIFICATION OF REFERENCE SENT TO EMPLOYER",
         details: ["Track Request", "Check Spam/Junk Folder", "Contact Support"],
