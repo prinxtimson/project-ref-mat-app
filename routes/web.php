@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\CandidateReference;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +50,15 @@ Route::get('/', function () {
 Route::get('/search', function () {
     return view('welcome');
 });
+
+Route::get('/reference-template/{id}', function ($id) {
+    $candidate_ref = CandidateReference::find($id);
+    
+    $candidate_ref->date_joined = Carbon::parse($candidate_ref->date_joined)->format('d M, Y'); 
+    $candidate_ref->created_at = Carbon::parse($candidate_ref->created_at)->format('d M, Y');
+    return view('reference_letter_template', ['user' => $candidate_ref]);
+});
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 

@@ -129,6 +129,11 @@ const TwoFactorAuthPage = () => {
                                 label="Confirm"
                                 disabled={isLoading}
                                 className="tw-w-40"
+                                pt={{
+                                    root: {
+                                        className: "tw-bg-[#293986]",
+                                    },
+                                }}
                             />
                         </div>
                         <div className=" tw-flex tw-items-center tw-justify-between">
@@ -141,6 +146,11 @@ const TwoFactorAuthPage = () => {
                                     disabled={isLoading}
                                     className="tw-w-fit"
                                     onClick={onResendCode}
+                                    pt={{
+                                        root: {
+                                            className: "tw-text-[#293986]",
+                                        },
+                                    }}
                                 />
                             </span>
 
@@ -151,6 +161,12 @@ const TwoFactorAuthPage = () => {
                                     navigate("/");
                                 }}
                                 className="tw-w-fit"
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-bg-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
                             />
                         </div>
                     </form>

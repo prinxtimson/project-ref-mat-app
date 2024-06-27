@@ -92,6 +92,12 @@ const ForgotPasswordPage = () => {
                                 type="submit"
                                 label="Reset"
                                 loading={isLoading}
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-bg-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
                             />
                         </div>
                         <div className="">

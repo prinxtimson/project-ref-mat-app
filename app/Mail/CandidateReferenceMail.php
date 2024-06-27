@@ -5,24 +5,25 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CandidateDataMail extends Mailable
+class CandidateReferenceMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $user;
+    private $payload;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($payload)
     {
-        $this->user = $user;
+        $this->payload = $payload;
     }
 
     /**
@@ -33,7 +34,7 @@ class CandidateDataMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Candidate Data Mail',
+            subject: 'Candidate Reference Mail',
         );
     }
 
@@ -45,8 +46,8 @@ class CandidateDataMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.candidate_data',
-            with: ['user' => $this->user, 'name' => $this->user->name]
+            markdown: 'emails.candidate_reference_mail',
+            with: $this->payload
         );
     }
 
@@ -57,6 +58,8 @@ class CandidateDataMail extends Mailable
      */
     public function attachments()
     {
-        return [];
+        return [
+            Attachment::fromStorage($this->payload['meta_data']['ref_path'])
+        ];
     }
 }

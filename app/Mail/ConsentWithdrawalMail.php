@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CandidateDataMail extends Mailable
+class ConsentWithdrawalMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,7 +20,7 @@ class CandidateDataMail extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+     public function __construct($user)
     {
         $this->user = $user;
     }
@@ -33,7 +33,7 @@ class CandidateDataMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Candidate Data Mail',
+            subject: 'Consent Withdrawal Mail',
         );
     }
 
@@ -45,7 +45,7 @@ class CandidateDataMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.candidate_data',
+            markdown: 'emails.consent_withdrawal_mail',
             with: ['user' => $this->user, 'name' => $this->user->name]
         );
     }

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import refService from "./refService";
+import History from "../../utils/History";
 
 const initialState = {
     refs: [],
@@ -146,7 +147,9 @@ export const refSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.message = action.payload.message;
+                state.ref = action.payload.data;
                 state.type = action.type;
+                History.navigate("ref-letter");
             })
             .addCase(requestReference.rejected, (state, action) => {
                 state.isLoading = false;

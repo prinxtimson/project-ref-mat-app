@@ -104,6 +104,8 @@ const DataAccessRequestPage = () => {
                                 options={ACCESSOPTIONS}
                                 onChange={handleOnChange}
                                 placeholder="Select Option"
+                                optionLabel="label"
+                                optionValue="value"
                             />
                         </div>
 
@@ -143,7 +145,16 @@ const DataAccessRequestPage = () => {
                         </div>
 
                         <div className="tw-flex tw-items-center tw-justify-center">
-                            <Button label="Ok" className="tw-w-40" />
+                            <Button
+                                label="Ok"
+                                className="tw-w-40"
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-bg-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
+                            />
                         </div>
                     </form>
                 </div>
@@ -155,9 +166,9 @@ const DataAccessRequestPage = () => {
 export default DataAccessRequestPage;
 
 const ACCESSOPTIONS = [
-    "Access to Personal Data",
-    "Rectification",
-    "Restriction of Processing",
-    "Transfer of Data to other Organisation",
-    "Withdrawal of Consent",
+    { label: "Access to Personal Data", value: "1" },
+    { label: "Rectification", value: "2" },
+    { label: "Restriction of Processing", value: "3" },
+    { label: "Transfer of Data to other Organisation", value: "4" },
+    { label: "Withdrawal of Consent", value: "5" },
 ];

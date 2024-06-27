@@ -79,7 +79,7 @@ const Header = () => {
     return (
         <div className="tw-z-50 tw-sticky tw-top-0 tw-w-full tw-bg-white tw-border-b">
             <Menubar
-                className="tw-bg-white tw-h-20 tw-text-indigo-700"
+                className="tw-bg-white tw-h-20 tw-text-[#293986]"
                 model={menuItems}
                 start={
                     <div className="tw-mx-3 md:tw-mx-5">
@@ -124,6 +124,12 @@ const Header = () => {
                                     size="small"
                                     label="Search"
                                     onClick={() => navigate("/search")}
+                                    pt={{
+                                        root: {
+                                            className:
+                                                "tw-bg-[#293986] tw-border-[#293986]",
+                                        },
+                                    }}
                                 />
                             </div>
                         </div>

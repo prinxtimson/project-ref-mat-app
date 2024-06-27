@@ -14,7 +14,7 @@ const InteractionPage = () => {
                 <div className="tw-flex tw-flex-col tw-gap-5 tw-items-center">
                     <div className="tw-flex tw-flex-col tw-justify-center sm:tw-flex-row tw-gap-5">
                         <div
-                            className="tw-shadow tw-text-white tw-rounded-md tw-p-3 tw-flex tw-gap-4 tw-items-center tw-justify-center tw-flex-col tw-cursor-pointer tw-bg-indigo-800 tw-min-h-44 tw-w-80"
+                            className="tw-shadow tw-text-white tw-rounded-md tw-p-3 tw-flex tw-gap-4 tw-items-center tw-justify-center tw-flex-col tw-cursor-pointer tw-bg-[#293986] tw-min-h-44 tw-w-80"
                             onClick={() => navigate("messaging")}
                         >
                             <h2 className="tw-m-0 tw-text-center">
@@ -27,7 +27,7 @@ const InteractionPage = () => {
                         </div>
 
                         <div
-                            className="tw-shadow tw-text-white tw-rounded-md tw-p-3 tw-flex tw-gap-4 tw-items-center tw-justify-center tw-flex-col tw-cursor-pointer tw-bg-indigo-800 tw-min-h-44 tw-w-80"
+                            className="tw-shadow tw-text-white tw-rounded-md tw-p-3 tw-flex tw-gap-4 tw-items-center tw-justify-center tw-flex-col tw-cursor-pointer tw-bg-[#293986] tw-min-h-44 tw-w-80"
                             onClick={() => navigate("comments")}
                         >
                             <h2 className="tw-m-0 tw-text-center">

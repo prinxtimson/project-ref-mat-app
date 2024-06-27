@@ -45,9 +45,9 @@ const Carousel = () => {
                 >
                     <div className="">
                         {user ? (
-                            <div className="tw-grow tw-flex tw-flex-row tw-justify-between">
-                                <div className=" tw-grow tw-flex tw-flex-col tw-justify-center tw-p-5 sm:tw-p-10 tw-text-white">
-                                    <h1 className=" tw-my-0">
+                            <div className="tw-grow tw-flex tw-justify-between tw-items-center">
+                                <div className=" tw-grow tw-flex tw-flex-col tw-justify-cente tw-p-5 sm:tw-p-10 tw-text-white">
+                                    <h1 className="tw-italic tw-my-0">
                                         Welcome {user.name}
                                     </h1>
                                 </div>
@@ -59,6 +59,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/request-reference")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to initiate a reference request"
                                         tooltipOptions={{
                                             position: "left",
@@ -86,6 +92,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/cancel-reference")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to proceed with cancellation"
                                         tooltipOptions={{
                                             position: "left",
@@ -113,6 +125,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/reference-tracking")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Track the status of your reference requests here!"
                                         tooltipOptions={{
                                             position: "left",
@@ -140,6 +158,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/data-deletion")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
                                         tooltipOptions={{
                                             position: "left",
@@ -165,6 +189,12 @@ const Carousel = () => {
                                         label="Data Subject Access Request"
                                         className="tw-w-64"
                                         onClick={() => navigate("/data-access")}
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to request access to your personal data stored on our platform"
                                         tooltipOptions={{
                                             position: "left",
@@ -204,6 +234,12 @@ const Carousel = () => {
                                     label="Login"
                                     className="tw-w-48 tw-my-5"
                                     onClick={() => navigate("/login")}
+                                    pt={{
+                                        root: {
+                                            className:
+                                                "tw-bg-[#293986] tw-border-[#293986]",
+                                        },
+                                    }}
                                 />
                             </div>
                         )}
@@ -215,9 +251,9 @@ const Carousel = () => {
                 >
                     <div className="">
                         {user ? (
-                            <div className="tw-grow tw-flex tw-flex-row tw-justify-between">
-                                <div className=" tw-grow tw-flex tw-flex-col tw-justify-center tw-p-5 sm:tw-p-10 tw-text-white">
-                                    <h1 className=" tw-my-0">
+                            <div className="tw-grow tw-flex tw-justify-between tw-items-center">
+                                <div className=" tw-grow tw-flex tw-flex-col tw-justify-cente tw-p-5 sm:tw-p-10 tw-text-white">
+                                    <h1 className="tw-italic tw-my-0">
                                         Welcome {user.name}
                                     </h1>
                                 </div>
@@ -228,6 +264,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/request-reference")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to initiate a reference request"
                                         tooltipOptions={{
                                             position: "left",
@@ -255,6 +297,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/cancel-reference")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to proceed with cancellation"
                                         tooltipOptions={{
                                             position: "left",
@@ -282,6 +330,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/reference-tracking")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Track the status of your reference requests here!"
                                         tooltipOptions={{
                                             position: "left",
@@ -309,6 +363,12 @@ const Carousel = () => {
                                         onClick={() =>
                                             navigate("/data-deletion")
                                         }
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to submit a data deletion request and learn more about our data deletion policy"
                                         tooltipOptions={{
                                             position: "left",
@@ -334,6 +394,12 @@ const Carousel = () => {
                                         label="Data Subject Access Request"
                                         className="tw-w-64"
                                         onClick={() => navigate("/data-access")}
+                                        pt={{
+                                            root: {
+                                                className:
+                                                    "tw-bg-[#293986] tw-border-[#293986]",
+                                            },
+                                        }}
                                         tooltip="Click here to request access to your personal data stored on our platform"
                                         tooltipOptions={{
                                             position: "left",
@@ -373,6 +439,12 @@ const Carousel = () => {
                                     label="Login"
                                     className="tw-w-48 tw-my-5"
                                     onClick={() => navigate("/login")}
+                                    pt={{
+                                        root: {
+                                            className:
+                                                "tw-bg-[#293986] tw-border-[#293986]",
+                                        },
+                                    }}
                                 />
                             </div>
                         )}

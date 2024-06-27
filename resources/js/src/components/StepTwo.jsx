@@ -5,6 +5,7 @@ import { ProgressBar } from "primereact/progressbar";
 import { Button } from "primereact/button";
 import { FileUpload } from "primereact/fileupload";
 import axios from "axios";
+import { Tag } from "primereact/tag";
 
 const StepTwo = ({
     data,
@@ -14,7 +15,7 @@ const StepTwo = ({
     toast,
 }) => {
     const fileUploadRef = useRef(null);
-    const [file, setFile] = useState(null);
+    const [status, setStatus] = useState("pending");
     const [progress, setProgress] = useState(0);
 
     const emptyTemplate = () => {
@@ -38,66 +39,107 @@ const StepTwo = ({
                 >
                     Browse File/Drag and Drop
                 </span>
-                <input
-                    name="avatar"
-                    hidden
-                    onChange={(e) => handleOnFileSelect(e)}
-                    type="file"
-                    accept=".mp3,audio/*"
-                    ref={fileUploadRef}
-                />
-                <Button
-                    label="Browse"
-                    type="button"
-                    onClick={() => fileUploadRef.current.click()}
-                />
             </div>
         );
     };
 
-    const handleOnFileSelect = (e) => {
-        setFile(e.files[0]);
+    const handleFileUpload = (e) => {
+        console.log("uploading");
+
+        const formData = new FormData();
+        formData.append("_method", "post");
+        formData.append("file", e.files[0]);
+        // Make a file upload request
+        axios
+            .post("/api/reference/upload", formData, {
+                onUploadProgress: (progressEvent) => {
+                    const progress = Math.round(
+                        (progressEvent.loaded / progressEvent.total) * 100
+                    );
+                    setProgress(progress);
+                },
+            })
+            .then((res) => {
+                setStatus("completed");
+                toast.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: "File upload successful",
+                    life: 5000,
+                });
+                handleOnSuccessStoryUpload(res.data.path);
+            })
+            .catch((error) => {
+                setStatus("error");
+                console.error("File upload failed:", error);
+                toast.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "File upload failed",
+                    life: 5000,
+                });
+            });
     };
 
-    const headerTemplate = () => <div />;
+    const headerTemplate = (options) => {
+        const { className, chooseButton } = options;
 
-    useEffect(() => {
-        if (file) {
-            const formData = new FormData();
-            formData.append("_method", "post");
-            formData.append("file", file);
-            // Make a file upload request
-            axios
-                .post("/api/reference/upload", formData, {
-                    onUploadProgress: (progressEvent) => {
-                        const progress = Math.round(
-                            (progressEvent.loaded / progressEvent.total) * 100
-                        );
-                        setProgress(progress);
-                    },
-                })
-                .then((res) => {
-                    console.log("File upload successful:", res.data);
-                    toastRef.current.show({
-                        severity: "success",
-                        summary: "Success",
-                        detail: "File upload successful",
-                        life: 5000,
-                    });
+        return (
+            <div
+                className={className}
+                style={{
+                    backgroundColor: "transparent",
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
+                {chooseButton}
+            </div>
+        );
+    };
 
-                    handleOnSuccessStoryUpload(res.data.path);
-                })
-                .catch((error) => {
-                    console.error("File upload failed:", error);
-                    toast.current.show({
-                        severity: "error",
-                        summary: "Error",
-                        detail: "File upload failed",
-                        life: 5000,
-                    });
-                });
-        }
-    }, [file]);
+    const itemTemplate = (file, props) => {
+        return (
+            <div className="tw-flex tw-items-center tw-flex-wrap">
+                <div
+                    className="tw-flex tw-items-center"
+                    style={{ width: "40%" }}
+                >
+                    <img
+                        alt={file.name}
+                        role="presentation"
+                        src={file.objectURL}
+                        width={100}
+                    />
+                    <span className="tw-flex tw-flex-col tw-text-left tw-ml-3">
+                        {file.name}
+                        <small>{props.formatSize}</small>
+                    </span>
+                </div>
+                <Tag
+                    value={status}
+                    severity={
+                        status == "pending"
+                            ? "warning"
+                            : status == "completed"
+                            ? "success"
+                            : "danger"
+                    }
+                    className="tw-px-3 tw-py-2"
+                />
+                <Button
+                    type="button"
+                    icon="pi pi-times"
+                    rounded
+                    className="p-button-outlined p-button-danger tw-p-4 tw-ml-auto"
+                    onClick={() => {
+                        onTemplateRemove(file, props.onRemove);
+                        handleOnSuccessStoryUpload("");
+                    }}
+                />
+            </div>
+        );
+    };
 
     return (
         <div className="card">
@@ -211,25 +253,38 @@ const StepTwo = ({
                     </label>
 
                     <FileUpload
-                        name="success_story"
-                        url="#"
+                        name="file"
+                        ref={fileUploadRef}
                         accept=".mp3,audio/*"
-                        onSelect={handleOnFileSelect}
                         emptyTemplate={emptyTemplate}
                         headerTemplate={headerTemplate}
+                        itemTemplate={itemTemplate}
+                        chooseLabel="Browse"
+                        auto
                         customUpload
+                        uploadHandler={handleFileUpload}
+                        chooseOptions={{ className: "tw-bg-[#293986]" }}
                     />
-                    <div className="tw-flex tw-gap-4 tw-items-center">
+                    {/* <div className="tw-flex tw-gap-4 tw-items-center">
                         <small>{file?.name}</small>
                         {progress > 0 && (
                             <ProgressBar value={progress}></ProgressBar>
                         )}
-                    </div>
+                    </div> */}
 
                     <small className="tw-m-0">Max. file size: 6 GB.</small>
                 </div>
                 <div className="tw-flex tw-items-center tw-justify-between">
-                    <Button label="Ok" className="tw-w-40" />
+                    <Button
+                        label="Ok"
+                        className="tw-w-40"
+                        pt={{
+                            root: {
+                                className:
+                                    "tw-bg-[#293986] tw-border-[#293986]",
+                            },
+                        }}
+                    />
                 </div>
             </form>
         </div>

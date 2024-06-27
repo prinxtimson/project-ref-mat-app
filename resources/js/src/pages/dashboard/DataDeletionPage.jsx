@@ -156,6 +156,12 @@ const DataDeletionPage = () => {
                                 label="Ok"
                                 className="tw-w-40"
                                 loading={isLoading}
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-bg-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
                             />
                         </div>
                     </form>

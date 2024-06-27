@@ -135,7 +135,6 @@ const ProfilePage = () => {
                         detail: res.data.message,
                         life: 5000,
                     });
-                    n;
                 })
                 .catch((err) => {
                     console.log(err);

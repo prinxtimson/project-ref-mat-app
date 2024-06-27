@@ -162,12 +162,24 @@ const ChangePasswordPage = () => {
                                 className="tw-w-fit"
                                 outlined
                                 onClick={() => navigate(-1)}
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-text-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
                             />
                             <Button
                                 type="submit"
                                 disabled={isLoading}
                                 label="Update"
                                 className="tw-w-fit"
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-bg-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
                             />
                         </div>
                     </form>

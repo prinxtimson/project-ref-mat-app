@@ -1,7 +1,9 @@
 <x-mail::message>
-# DATA SUBJECT ACCESS
+# Request for Access to Personal Data – Confirmation
 
-Here is the breakdown of the personal data that Tritek holds on the the LMS reference platform.
+Dear {{$name}},
+
+We have received your request for access to your personal data. Your request has been processed, and the data is attached/enclosed with this email. If you have any further questions, please do not hesitate to contact us.
 
 @component('mail::panel')
 # Firstname: {{$user['profile']['firstname']}}

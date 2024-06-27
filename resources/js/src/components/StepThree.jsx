@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
@@ -8,12 +9,31 @@ const StepThree = ({
     handleFileChange,
     handleSubmit,
 }) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const [err, setErr] = useState({
+        phone: false,
+        email: false,
+    });
+
     const handleFileSelect = (e) => {
         handleFileChange(e.target.files[0]);
     };
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
+        let _email = !emailPattern.test(data.email);
+
+        if (_email || !data.consent) {
+            setErr({
+                email: _email,
+                consent: true,
+            });
+            return;
+        }
+        setErr({
+            email: false,
+            consent: false,
+        });
         handleSubmit();
     };
 
@@ -38,7 +58,13 @@ const StepThree = ({
                         onChange={handleOnChange}
                         placeholder="Enter Recruiter Email"
                         required
+                        invalid={err.email}
                     />
+                    {err.email && (
+                        <small id="email-help" className="tw-text-red-500">
+                            Please enter a valid email
+                        </small>
+                    )}
                 </div>
                 <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
                     <label htmlFor="position">Position Held *</label>
@@ -57,7 +83,7 @@ const StepThree = ({
                         name="cv"
                         accept=".docx,.csv,.pdf,.pages,.pptx,.ppt"
                         onChange={handleFileSelect}
-                        value={data.cv}
+                        //value={data.cv}
                     />
                 </div>
 
@@ -65,13 +91,17 @@ const StepThree = ({
                     <div className="field-checked tw-text-gray-900 tw-items-center">
                         <Checkbox
                             name="consent"
-                            value={consent}
+                            value={data.consent}
                             onChange={handleOnChange}
                             checked={data.consent}
                             className="tw-mr-2"
+                            invalid={err.consent}
                         />
 
-                        <label htmlFor="accept" className="">
+                        <label
+                            htmlFor="accept"
+                            className={err.consent ? "tw-text-red-500" : ""}
+                        >
                             I agree to grant consent to Tritek to be in custody
                             of my personal data.
                         </label>
@@ -79,13 +109,25 @@ const StepThree = ({
                 </div>
 
                 <div className="tw-mb-4">
-                    <a href="http://lmstritek.co.uk/privacy-policy/">
+                    <a
+                        href="http://lmstritek.co.uk/privacy-policy/"
+                        className="tw-underline tw-text-sm tw-p-2 tw-text-blue-500 hover:tw-text-blue-800"
+                    >
                         Read Privacy Policy
                     </a>
                 </div>
 
                 <div className="tw-flex tw-items-center tw-justify-between">
-                    <Button label="Submit" className="tw-w-52" />
+                    <Button
+                        label="Submit"
+                        className="tw-w-52"
+                        pt={{
+                            root: {
+                                className:
+                                    "tw-bg-[#293986] tw-border-[#293986]",
+                            },
+                        }}
+                    />
                 </div>
             </form>
         </div>

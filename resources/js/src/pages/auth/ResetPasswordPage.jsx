@@ -183,6 +183,12 @@ const ResetPasswordPage = () => {
                                 label="Change Password"
                                 loading={isLoading}
                                 className="custom-btn "
+                                pt={{
+                                    root: {
+                                        className:
+                                            "tw-bg-[#293986] tw-border-[#293986]",
+                                    },
+                                }}
                             />
                         </div>
                     </form>

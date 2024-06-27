@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
         <div
+        id="ref_template"
             style="
                 background-color: white;
                 display: block;
                 margin: 0 auto;
-                max-width: 720px;
+                max-width: 730px;
+                padding: 30px
             "
         >
             <div style="text-align: center; margin-bottom: 20px">
@@ -24,7 +26,7 @@
                         font-size: 22px;
                         font-weight: 800;
                         line-height: 44px;
-                        margin: 32px 0 0px 0;
+                        margin: 10px 0 0px 0;
                         padding: 0;
                         text-align: center;
                     "
@@ -114,7 +116,7 @@
                     >
                         {{$user['name']}} rendered his services to projects
                         within our organization between {{$user['date_joined']}}
-                        - {{$user['date_left']}}, undertaking the role of a Lead
+                        - {{$user['created_at']}}, undertaking the role of a Lead
                         Business Analyst.
                     </p>
                 </div>
@@ -131,7 +133,7 @@
                             text-align: justify;
                         "
                     >
-                        As an individual,{{$user['name']}} possesses a keen eye
+                        As an individual, {{$user['name']}} possesses a keen eye
                         for details, ability to work under his initiatives as
                         well as under pressure to meet tight deadlines; critical
                         as well as deductive reasoning, excellent problem

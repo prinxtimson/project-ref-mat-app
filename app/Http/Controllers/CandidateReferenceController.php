@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CandidateReferenceMail;
 use App\Models\CandidateReference;
+use App\Models\ReferenceEmail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
@@ -40,7 +44,7 @@ class CandidateReferenceController extends Controller
             'recruiter_name' => 'string|required',
             'recruiter_email' => 'string|required',
             'position' => 'string|required',
-            'success_story' => 'string|required',
+            'success_story' => 'string|nullable',
         ]);
 
         $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
@@ -63,7 +67,7 @@ class CandidateReferenceController extends Controller
 
         return response()->json([
             'message' => 'Refecrence request successful',
-            'data ' => $reference
+            'data' => $reference
         ]);
     }
 
@@ -90,7 +94,7 @@ class CandidateReferenceController extends Controller
     public function uploadFile(Request $request)
     {
         $request->validate([
-            'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav'
+            'file' => 'required|max:6442450944'
         ]);
 
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
@@ -103,7 +107,7 @@ class CandidateReferenceController extends Controller
         if($fileReceived->isFinished()){
             $file = $fileReceived->getFile();
 
-            $this->saveFile($file);
+            return $this->saveFile($file);
         }
 
         $handler = $fileReceived->handler();
@@ -125,7 +129,7 @@ class CandidateReferenceController extends Controller
     {
         $fileName = $this->createFilename($file);
 
-        $path = Storage::putFileAs('photos', $file, $fileName);
+        $path = Storage::putFileAs('public/success_stories', $file, $fileName);
 
         $mime = str_replace('/', '-', $file->getMimeType());
 
@@ -153,5 +157,46 @@ class CandidateReferenceController extends Controller
         $filename .= "_" . md5(time()) . "." . $extension;
 
         return $filename;
+    }
+
+    public function sendReferenceLetter($id)
+    {
+        // $date = date_create($payload["payroll_cycle"]);
+        // $payload["payroll_cycle"] = strtoupper(date_format($date, "F, Y"));
+        if (!$payload = CandidateReference::find($id))
+            return response(['message' => 'Reference Not Found'], 404);
+
+        $payload->date_joined = Carbon::parse($payload->date_joined)->format('d M, Y'); 
+        $payload->created_at = Carbon::parse($payload->created_at)->format('d M, Y');
+
+        $path = '/public/reference_letters/reference_letter_' . md5(time()) . '.pdf';
+        $html = view('reference_letter_template', $payload)->render();
+        Pdf::loadHTML($html)->save($path);
+
+        $payload->update([
+            'generated_reference' => $path
+        ]);
+
+        $mail_payload = [
+            'recipient_name' => $payload->recipient_name,
+            'recipient_email' => $payload->recipient_email,
+            'meta_data' => [
+                'user_name' => $payload->name,
+                'user_email' => $payload->email,
+                'ref_path' => $path
+            ]
+        ];
+
+        Mail::to($payload['recruiter_email'])->send(new CandidateReferenceMail($mail_payload));
+
+        $payload->update([
+            'status' => "3"
+        ]);
+
+        ReferenceEmail::create($mail_payload);
+
+        return response()->json([
+            'message' => 'Reference letter sent'
+        ]);
     }
 }

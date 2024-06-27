@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum', '2faApi']], function () {
 Route::group(['middleware' => ['auth:sanctum', '2faApi'], 'prefix' => 'reference'], function () {
     Route::get('/', [CandidateReferenceController::class, 'index'])->name('ref.index');
     Route::get('/my', [CandidateReferenceController::class, 'getUserReferences'])->name('ref.my');
+    Route::get('/send/{id}', [CandidateReferenceController::class, 'sendReferenceLetter'])->name('ref.send');
     Route::post('/', [CandidateReferenceController::class, 'store'])->name('ref.create');
     Route::put('/cancel', [CandidateReferenceController::class, 'cancelReferenceRequest'])->name('ref.cancel');
     Route::post('/upload', [CandidateReferenceController::class, 'uploadFile'])->name('ref.upload');

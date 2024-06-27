@@ -42,13 +42,15 @@ const ReferenceTrackingPage = () => {
     const statusBodyTemplate = (rowData) => (
         <div className="">
             {rowData.status == 0
-                ? "under review by Admin"
+                ? "Submitted"
                 : rowData.status == 1
-                ? "In Progress"
+                ? "Under review by Admin"
                 : rowData.status == 2
-                ? "Request Completed"
+                ? "In Progress"
                 : rowData.status == 3
-                ? "Request Declined"
+                ? "Completed"
+                : rowData.status == 4
+                ? "Declined"
                 : "Delayed as a result of technical gliches"}
         </div>
     );

@@ -26,6 +26,7 @@ const RequestReferencePage = () => {
         recruiter_email: "",
         position: "",
         success_story: "",
+        project_name: "",
     });
 
     const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const RequestReferencePage = () => {
                 recruiter_email: "",
                 position: "",
                 success_story: "",
+                project_name: "",
             });
         }
 
@@ -70,18 +72,32 @@ const RequestReferencePage = () => {
     }, [isError, isSuccess, message, dispatch]);
 
     const handleOnChange = (event) => {
-        setData({ ...data, [event.target.name]: event.target.value });
+        setData({
+            ...data,
+            [event.target.name]:
+                event.target.type === "checkbox"
+                    ? event.target.checked
+                    : event.target.value,
+        });
     };
 
     const handleFileChange = (param) => setData({ ...data, cv: param });
 
-    const handleOnSuccessStoryUpload = (param) =>
-        setData({ ...data, success_story, param });
+    const handleOnSuccessStoryUpload = (param) => {
+        setData({ ...data, success_story: param });
+    };
 
     const handleOnNext = () => setStep(step + 1);
 
     const handleSubmit = () => {
-        dispatch(requestReference(data));
+        let formData = new FormData();
+
+        formData.append("_method", "post");
+        for (const key in data) {
+            formData.append(`${key}`, data[key]);
+        }
+
+        dispatch(requestReference(formData));
     };
 
     const handleGetStep = (param) => {
@@ -131,6 +147,7 @@ const RequestReferencePage = () => {
                         <p className="tw-text-xl tw-text-gray-500 tw-my-0">{`${step} of 3`}</p>
                         <ProgressBar
                             value={Math.round(33.33 * step)}
+                            color="#293986"
                         ></ProgressBar>
                         <h2 className="tw-m-0">{`Step ${step}`}</h2>
                     </div>

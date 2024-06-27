@@ -26,13 +26,18 @@ const SearchPage = () => {
                             label="Ok"
                             className="tw-self-center tw-w-40"
                             onClick={() => setSelectedSearch(null)}
+                            pt={{
+                                root: {
+                                    className: "tw-bg-[#293986]",
+                                },
+                            }}
                         />
                     </div>
                 ) : (
                     <div className="tw-grid tw-gap-5 tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3">
                         {SEARCHITEMS.map((item, index) => (
                             <div
-                                className="tw-shadow tw-text-white tw-rounded-md tw-p-4 tw-flex tw-gap-4 tw-items-center tw-cursor-pointer tw-bg-indigo-800 tw-min-h-44"
+                                className="tw-shadow tw-text-white tw-rounded-md tw-p-4 tw-flex tw-gap-4 tw-items-center tw-cursor-pointer tw-bg-[#293986] tw-min-h-44"
                                 key={index}
                                 onClick={() => setSelectedSearch(item)}
                             >
