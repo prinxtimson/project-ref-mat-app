@@ -49,6 +49,7 @@ const RefLetterPage = () => {
                     detail: "Reference letter sent successful",
                     life: 5000,
                 });
+                navigate("/request-reference");
             })
             .catch((error) => {
                 console.error("Sending failed:", error);
