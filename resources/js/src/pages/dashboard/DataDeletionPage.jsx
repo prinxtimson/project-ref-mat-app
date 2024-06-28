@@ -78,7 +78,7 @@ const DataDeletionPage = () => {
 
                 <div className="card tw-rounded-lg  tw-w-full tw-p-3 sm:tw-p-6 tw-bg-white">
                     <form className="p-fluid" onSubmit={handleOnSubmit}>
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="fullname">Full Name *</label>
                             <InputText
                                 name="name"
@@ -89,7 +89,7 @@ const DataDeletionPage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="email">Email *</label>
                             <InputText
                                 name="email"
@@ -100,7 +100,7 @@ const DataDeletionPage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="type">
                                 Specify Data Deletion *
                             </label>
@@ -113,7 +113,7 @@ const DataDeletionPage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <div className="field-checked tw-text-gray-900 tw-flex tw-gap-4 tw-items-center">
                                 <label htmlFor="accept" className="tw-mr-2">
                                     Confirm Deletion

@@ -30,7 +30,7 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                     handleOnNext();
                 }}
             >
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="fullname">Full Name *</label>
                     <div className="tw-flex tw-gap-3">
                         <InputText
@@ -50,7 +50,7 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                     </div>
                 </div>
 
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="email">Email *</label>
                     <InputText
                         name="email"
@@ -66,7 +66,7 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                         </small>
                     )}
                 </div>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="phone_number">Phone Number </label>
                     <InputText
                         name="phone"
@@ -81,7 +81,7 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                         </small>
                     )}
                 </div>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="date_joined">Date Joined *</label>
                     <input
                         type="date"

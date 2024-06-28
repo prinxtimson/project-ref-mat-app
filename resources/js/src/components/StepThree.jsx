@@ -8,6 +8,7 @@ const StepThree = ({
     handleOnChange,
     handleFileChange,
     handleSubmit,
+    isLoading,
 }) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const [err, setErr] = useState({
@@ -40,7 +41,7 @@ const StepThree = ({
     return (
         <div className="card">
             <form className="p-fluid" onSubmit={handleOnSubmit}>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="recruiter_name">Recruiter Name *</label>
                     <InputText
                         name="recruiter_name"
@@ -50,7 +51,7 @@ const StepThree = ({
                         required
                     />
                 </div>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="recruiter_email">Recruiter Email *</label>
                     <InputText
                         name="recruiter_email"
@@ -66,7 +67,7 @@ const StepThree = ({
                         </small>
                     )}
                 </div>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="position">Position Held *</label>
                     <InputText
                         name="position"
@@ -76,7 +77,7 @@ const StepThree = ({
                         required
                     />
                 </div>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="cv_upload">Please upload your CV</label>
                     <input
                         type="file"
@@ -127,6 +128,7 @@ const StepThree = ({
                                     "tw-bg-[#293986] tw-border-[#293986]",
                             },
                         }}
+                        loading={isLoading}
                     />
                 </div>
             </form>

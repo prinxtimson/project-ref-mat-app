@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("phone_number")->nullable();
             $table->timestamp("date_joined");
             $table->string("project_name");
+            $table->string("check_ins_url");
             $table->tinyInteger("is_project_completed")->default(0);
             $table->string("project_role");
             $table->string('recruiter_name');

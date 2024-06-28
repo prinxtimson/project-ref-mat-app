@@ -27,6 +27,7 @@ const RequestReferencePage = () => {
         position: "",
         success_story: "",
         project_name: "",
+        check_ins_url: "",
     });
 
     const dispatch = useDispatch();
@@ -127,6 +128,7 @@ const RequestReferencePage = () => {
                         handleOnChange={handleOnChange}
                         handleFileChange={handleFileChange}
                         handleSubmit={handleSubmit}
+                        isLoading={isLoading}
                     />
                 );
             default:

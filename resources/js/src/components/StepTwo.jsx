@@ -150,7 +150,7 @@ const StepTwo = ({
                     handleOnNext();
                 }}
             >
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="project_name">Project Name *</label>
                     <InputText
                         name="project_name"
@@ -161,7 +161,19 @@ const StepTwo = ({
                     />
                 </div>
 
-                <div className="tw-flex tw-gap-3 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
+                    <label htmlFor="check_ins_url">Check-ins Url *</label>
+                    <InputText
+                        name="check_ins_url"
+                        value={data.check_ins_url}
+                        onChange={handleOnChange}
+                        placeholder="Enter Check-ins Url"
+                        required
+                    />
+                    <small>copy your check-ins url and paste here</small>
+                </div>
+
+                <div className="tw-flex tw-gap-3 tw-mb-6">
                     <label htmlFor="email">Is project completed ?</label>
                     <div className="tw-flex tw-flex-wrap tw-gap-2">
                         <div className="tw-flex tw-items-center">
@@ -191,7 +203,7 @@ const StepTwo = ({
                     </div>
                 </div>
 
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="project_role">Select Project Role *</label>
 
                     <div className="tw-flex tw-flex-col tw-flex-wrap tw-gap-2">
@@ -246,7 +258,7 @@ const StepTwo = ({
                     </div>
                 </div>
 
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="date_joined">
                         Please upload your success story (audio format). File
                         type: audio, .mp3, mpeg3.

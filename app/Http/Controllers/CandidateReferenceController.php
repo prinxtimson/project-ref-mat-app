@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Basecamp;
 use App\Mail\CandidateReferenceMail;
 use App\Models\CandidateReference;
 use App\Models\ReferenceEmail;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
@@ -32,43 +34,78 @@ class CandidateReferenceController extends Controller
 
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'firstname' => 'string|required',
-            'lastname' => 'string|required',
-            'email' => 'string|required|email',
-            'phone_number' => 'string|nullable',
-            'date_joined' => 'string|required',
-            'project_name' => 'string|required',
-            'project_role' => 'string|required',
-            'is_project_completed' => 'string|required',
-            'recruiter_name' => 'string|required',
-            'recruiter_email' => 'string|required',
-            'position' => 'string|required',
-            'success_story' => 'string|nullable',
-        ]);
+        try {
+            $fields = $request->validate([
+                'firstname' => 'string|required',
+                'lastname' => 'string|required',
+                'email' => 'string|required|email',
+                'phone_number' => 'string|nullable',
+                'date_joined' => 'string|required',
+                'project_name' => 'string|required',
+                'project_role' => 'string|required',
+                'is_project_completed' => 'string|required',
+                'recruiter_name' => 'string|required',
+                'recruiter_email' => 'string|required',
+                'position' => 'string|required',
+                'success_story' => 'string|nullable',
+                'check_ins_url' => 'string|required'
+            ]);
 
-        $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
-        unset($fields['firstname'], $fields['lastname']);
+            $checkins = $this->calCheckins($fields);
+            if($checkins['error']){
+                return response(['message' => $checkins['message']], $checkins['codes']);
+            }
 
-        if(isset($fields['date_joined'])){
-            $fields['date_joined'] =  new Carbon($fields['date_joined']);
+            if($checkins['data'] < 70){
+                return response(['message' => "Project Check-ins not up to recommended level"], 400);
+            }
+
+            $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
+            unset($fields['firstname'], $fields['lastname']);
+
+            if(isset($fields['date_joined'])){
+                $fields['date_joined'] =  new Carbon($fields['date_joined']);
+            }
+
+            if ($request->hasFile('cv')) {
+                $path = $request->file('cv')->store(
+                    'public/candidate_cv'
+                );
+                $fields['cv'] = Storage::url($path);
+            }
+
+            $user = User::find(auth()->id());
+
+            $reference = $user->candidate_references()->create($fields);
+
+            return response()->json([
+                'message' => 'Refecrence request successful',
+                'data' => $reference
+            ]);
+        } catch(Exception $e) {
+            return response(['message' => $e->getMessage()], 400);
         }
+    }
 
-        if ($request->hasFile('cv')) {
-            $path = $request->file('cv')->store(
-                'public/candidate_cv'
-            );
-            $fields['cv'] = Storage::url($path);
+    private function calCheckins($payload)
+    {
+        try{
+            $basecamp = new Basecamp;
+            $checkins = $basecamp->getCandidateCheckins($payload['check_ins_url']);
+            $count = 0;
+
+            foreach ($checkins as $value) {
+                if($value['creator']['email_address'] == $payload['email']){
+                    $count = $count + 1;
+                }
+            }
+
+            $checkins_rate = ($count/60) * 100;
+
+            return ['error' => false, 'data' => $checkins_rate];
+        } catch (Exception $e){
+            return ['error' => true, 'message' => $e->getMessage(), 'codes' => $e->getCode()];
         }
-
-        $user = User::find(auth()->id());
-
-        $reference = $user->candidate_references()->create($fields);
-
-        return response()->json([
-            'message' => 'Refecrence request successful',
-            'data' => $reference
-        ]);
     }
 
     public function cancelReferenceRequest(Request $request)

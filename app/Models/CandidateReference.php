@@ -24,6 +24,7 @@ class CandidateReference extends Model
         'status',
         'success_story',
         'generated_reference',
+        'check_ins_url',
         'cv'
     ];
 

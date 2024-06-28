@@ -74,7 +74,7 @@ const DataAccessRequestPage = () => {
 
                 <div className="card tw-rounded-lg tw-w-full tw-p-3 sm:tw-p-6 tw-bg-white">
                     <form className="p-fluid" onSubmit={handleOnSubmit}>
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="fullname">Full Name *</label>
                             <InputText
                                 name="name"
@@ -85,7 +85,7 @@ const DataAccessRequestPage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="email">Email *</label>
                             <InputText
                                 name="email"
@@ -96,7 +96,7 @@ const DataAccessRequestPage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="type">Type of Request *</label>
                             <Dropdown
                                 name="type"
@@ -109,7 +109,7 @@ const DataAccessRequestPage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <div className="field-checked tw-flex tw-gap-4 tw-items-start tw-text-gray-900 ">
                                 <label htmlFor="accept" className="tw-mr-2">
                                     Authorization

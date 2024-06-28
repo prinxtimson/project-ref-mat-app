@@ -90,7 +90,7 @@ const CancelReferencePage = () => {
 
                 <div className="card">
                     <form className="p-fluid" onSubmit={handleOnSubmit}>
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label
                                 htmlFor="fullname"
                                 className="tw-text-gray-900"
@@ -115,7 +115,7 @@ const CancelReferencePage = () => {
                             </div>
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label htmlFor="date" className="tw-text-gray-900">
                                 Request Date *
                             </label>
@@ -138,7 +138,7 @@ const CancelReferencePage = () => {
                             /> */}
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <label
                                 htmlFor="reason"
                                 className="tw-text-gray-900"
@@ -155,7 +155,7 @@ const CancelReferencePage = () => {
                             />
                         </div>
 
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-4">
+                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                             <div className="field-checked tw-text-gray-900 tw-items-center">
                                 <label htmlFor="accept" className="tw-mr-2">
                                     Confirm Cancellation
