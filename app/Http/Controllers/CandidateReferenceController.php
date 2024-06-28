@@ -48,7 +48,6 @@ class CandidateReferenceController extends Controller
                 'recruiter_email' => 'string|required',
                 'position' => 'string|required',
                 'success_story' => 'string|nullable',
-                'check_ins_url' => 'string|required'
             ]);
 
             // $checkins = $this->calCheckins($fields);

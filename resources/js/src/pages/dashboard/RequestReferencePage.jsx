@@ -90,6 +90,8 @@ const RequestReferencePage = () => {
 
     const handleOnNext = () => setStep(step + 1);
 
+    const handlePrevious = () => setStep(step - 1);
+
     const handleSubmit = () => {
         let formData = new FormData();
 
@@ -118,6 +120,7 @@ const RequestReferencePage = () => {
                         toast={toastRef}
                         handleOnChange={handleOnChange}
                         handleOnNext={handleOnNext}
+                        handlePrevious={handlePrevious}
                         handleOnSuccessStoryUpload={handleOnSuccessStoryUpload}
                     />
                 );
@@ -127,6 +130,7 @@ const RequestReferencePage = () => {
                         data={data}
                         handleOnChange={handleOnChange}
                         handleFileChange={handleFileChange}
+                        handlePrevious={handlePrevious}
                         handleSubmit={handleSubmit}
                         isLoading={isLoading}
                     />
