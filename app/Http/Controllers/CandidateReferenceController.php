@@ -51,14 +51,14 @@ class CandidateReferenceController extends Controller
                 'check_ins_url' => 'string|required'
             ]);
 
-            $checkins = $this->calCheckins($fields);
-            if($checkins['error']){
-                return response(['message' => $checkins['message']], $checkins['codes']);
-            }
+            // $checkins = $this->calCheckins($fields);
+            // if($checkins['error']){
+            //     return response(['message' => $checkins['message']], $checkins['codes']);
+            // }
 
-            if($checkins['data'] < 70){
-                return response(['message' => "Project Check-ins not up to recommended level"], 400);
-            }
+            // if($checkins['data'] < 70){
+            //     return response(['message' => "You did not meet up the Project Check-ins requirements"], 400);
+            // }
 
             $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
             unset($fields['firstname'], $fields['lastname']);

@@ -8,6 +8,7 @@ const StepThree = ({
     handleOnChange,
     handleFileChange,
     handleSubmit,
+    handlePrevious,
     isLoading,
 }) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -113,12 +114,24 @@ const StepThree = ({
                     <a
                         href="http://lmstritek.co.uk/privacy-policy/"
                         className="tw-underline tw-text-sm tw-p-2 tw-text-blue-500 hover:tw-text-blue-800"
+                        target="_blank"
                     >
                         Read Privacy Policy
                     </a>
                 </div>
 
-                <div className="tw-flex tw-items-center tw-justify-between">
+                <div className="tw-flex tw-items-center tw-gap-6">
+                    <Button
+                        label="Previous"
+                        outlined
+                        onClick={handlePrevious}
+                        pt={{
+                            root: {
+                                className:
+                                    "tw-text-[#ccae2c] tw-border-[#ccae2c]",
+                            },
+                        }}
+                    />
                     <Button
                         label="Submit"
                         className="tw-w-52"

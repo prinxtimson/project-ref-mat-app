@@ -12,6 +12,7 @@ const StepTwo = ({
     handleOnChange,
     handleOnNext,
     handleOnSuccessStoryUpload,
+    handlePrevious,
     toast,
 }) => {
     const fileUploadRef = useRef(null);
@@ -287,6 +288,17 @@ const StepTwo = ({
                     <small className="tw-m-0">Max. file size: 6 GB.</small>
                 </div>
                 <div className="tw-flex tw-items-center tw-justify-between">
+                    <Button
+                        label="Previous"
+                        outlined
+                        onClick={handlePrevious}
+                        pt={{
+                            root: {
+                                className:
+                                    "tw-text-[#ccae2c] tw-border-[#ccae2c]",
+                            },
+                        }}
+                    />
                     <Button
                         label="Ok"
                         className="tw-w-40"
