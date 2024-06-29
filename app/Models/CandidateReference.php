@@ -15,6 +15,8 @@ class CandidateReference extends Model
         'email',
         'phone_number',
         'date_joined',
+        'date_left',
+        'gender',
         'project_name',
         'is_project_completed',
         'project_role',

@@ -40,7 +40,9 @@ class CandidateReferenceController extends Controller
                 'lastname' => 'string|required',
                 'email' => 'string|required|email',
                 'phone_number' => 'string|nullable',
+                'gender' => 'string|required',
                 'date_joined' => 'string|required',
+                'date_left' => 'string|required',
                 'project_name' => 'string|required',
                 'project_role' => 'string|required',
                 'is_project_completed' => 'string|required',
@@ -48,23 +50,24 @@ class CandidateReferenceController extends Controller
                 'recruiter_email' => 'string|required',
                 'position' => 'string|required',
                 'success_story' => 'string|nullable',
+                'check_ins_url' => 'string|required'
             ]);
 
-            // $checkins = $this->calCheckins($fields);
-            // if($checkins['error']){
-            //     return response(['message' => $checkins['message']], $checkins['codes']);
-            // }
+            $checkins = $this->calCheckins($fields);
+            if($checkins['error']){
+                return response(['message' => $checkins['message']], 400);
+            }
 
-            // if($checkins['data'] < 70){
-            //     return response(['message' => "You did not meet up the Project Check-ins requirements"], 400);
-            // }
+            if($checkins['data'] < 20){
+                return response(['message' => "You did not meet up the Project Check-ins requirements"], 400);
+            }
 
             $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
             unset($fields['firstname'], $fields['lastname']);
 
-            if(isset($fields['date_joined'])){
-                $fields['date_joined'] =  new Carbon($fields['date_joined']);
-            }
+            $fields['gender'] = $fields['gender'] == 'male' ? 'he' : ($fields['gender'] == 'female' ? 'she' : 'they');
+            $fields['date_joined'] =  new Carbon($fields['date_joined']);
+            $fields['date_left'] =  new Carbon($fields['date_left']);
 
             if ($request->hasFile('cv')) {
                 $path = $request->file('cv')->store(
@@ -129,9 +132,9 @@ class CandidateReferenceController extends Controller
 
     public function uploadFile(Request $request)
     {
-        $request->validate([
-            'file' => 'required|max:6442450944'
-        ]);
+        // $request->validate([
+        //     'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
+        // ]);
 
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
@@ -199,34 +202,32 @@ class CandidateReferenceController extends Controller
     {
         // $date = date_create($payload["payroll_cycle"]);
         // $payload["payroll_cycle"] = strtoupper(date_format($date, "F, Y"));
-        if (!$payload = CandidateReference::find($id))
+        if (!$candidate_ref = CandidateReference::find($id))
             return response(['message' => 'Reference Not Found'], 404);
 
-        $payload->date_joined = Carbon::parse($payload->date_joined)->format('d M, Y'); 
-        $payload->created_at = Carbon::parse($payload->created_at)->format('d M, Y');
+        $payload = (array) $candidate_ref->toArray();
+        $payload['date_joined'] = Carbon::parse($payload['date_joined'])->format('d M, Y'); 
+        $payload['date_left'] = Carbon::parse($payload['date_left'])->format('d M, Y');
 
         $path = '/public/reference_letters/reference_letter_' . md5(time()) . '.pdf';
-        $html = view('reference_letter_template', $payload)->render();
-        Pdf::loadHTML($html)->save($path);
-
-        $payload->update([
-            'generated_reference' => $path
-        ]);
+        $html = view('reference_letter_template', ['ref' => $payload]);
+        Pdf::loadHTML($html)->save($path, 'local');
 
         $mail_payload = [
-            'recipient_name' => $payload->recipient_name,
-            'recipient_email' => $payload->recipient_email,
+            'recipient_name' => $candidate_ref->recruiter_name,
+            'recipient_email' => $candidate_ref->recruiter_email,
             'meta_data' => [
-                'user_name' => $payload->name,
-                'user_email' => $payload->email,
+                'user_name' => $candidate_ref->name,
+                'user_email' => $candidate_ref->email,
                 'ref_path' => $path
             ]
         ];
 
         Mail::to($payload['recruiter_email'])->send(new CandidateReferenceMail($mail_payload));
 
-        $payload->update([
-            'status' => "3"
+        $candidate_ref->update([
+            'status' => "3",
+            'generated_reference' => $path
         ]);
 
         ReferenceEmail::create($mail_payload);

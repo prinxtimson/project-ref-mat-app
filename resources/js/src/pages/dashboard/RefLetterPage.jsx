@@ -1,17 +1,17 @@
-import { useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
+import { Skeleton } from "primereact/skeleton";
 
 import AppContainer from "../../layouts/AppContainer";
-import html2canvas from "html2canvas";
-import { clear } from "../../features/reference/refSlice";
 import axios from "axios";
 
 const RefLetterPage = () => {
     const toastRef = useRef();
+    const [isLoading, setIsLoading] = useState(true);
+    const [sendMailLoading, setSendMailLoading] = useState(false);
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { ref } = useSelector((state) => state.ref);
@@ -19,20 +19,16 @@ const RefLetterPage = () => {
     useEffect(() => {
         if (ref) {
             fetch(`/reference-template/${ref.id}`)
-                .then((res) => res.text())
+                .then((res) => {
+                    setIsLoading(false);
+                    return res.text();
+                })
                 .then((text) =>
                     new DOMParser().parseFromString(text, "text/html")
                 )
                 .then((dom) => dom.getElementById("ref_template"))
                 .then((doc) => {
                     document.getElementById("ref_image").appendChild(doc);
-                    // html2canvas(doc)
-                    //     .then(function (canvas) {
-                    //         document
-                    //             .getElementById("ref_image")
-                    //             .appendChild(canvas);
-                    //     })
-                    //     .catch((err) => console.log(err));
                 });
         } else {
             navigate("/request-reference");
@@ -40,9 +36,11 @@ const RefLetterPage = () => {
     }, [ref]);
 
     const handleSendReference = () => {
+        setSendMailLoading(true);
         axios
             .get(`/api/reference/send/${ref.id}`)
             .then((res) => {
+                setSendMailLoading(false);
                 toastRef.current.show({
                     severity: "success",
                     summary: "Success",
@@ -52,7 +50,8 @@ const RefLetterPage = () => {
                 navigate("/request-reference");
             })
             .catch((error) => {
-                console.error("Sending failed:", error);
+                console.error("Sending failed:", error.message);
+                setSendMailLoading(false);
                 toastRef.current.show({
                     severity: "error",
                     summary: "Error",
@@ -64,22 +63,49 @@ const RefLetterPage = () => {
 
     return (
         <AppContainer toast={toastRef}>
-            <div className="tw-grow tw-p-3 md:tw-p-6 tw-bg-white">
-                <div id="ref_image"></div>
-                <div className="tw-my-4 tw-flex tw-items-center tw-justify-center">
-                    <Button
-                        label="Ok"
-                        className="tw-w-40"
-                        pt={{
-                            root: {
-                                className:
-                                    "tw-bg-[#293986] tw-border-[#293986]",
-                            },
-                        }}
-                        onClick={handleSendReference}
-                    />
+            {isLoading ? (
+                <div className="tw-grow tw-p-3 md:tw-p-6 tw-bg-white tw-flex tw-flex-col tw-items-center">
+                    <div className="tw-grow tw-w-full tw-max-w-[730px]">
+                        <div className="tw-flex tw-justify-center tw-mb-8">
+                            <Skeleton width="20rem" height="4rem"></Skeleton>
+                        </div>
+                        <div className="tw-mb-8">
+                            <Skeleton width="10rem" height="2rem"></Skeleton>
+                        </div>
+                        <div className="tw-flex tw-justify-center tw-mb-4">
+                            <Skeleton width="20rem" height="2rem"></Skeleton>
+                        </div>
+                        <div className="tw-flex tw-flex-col tw-gap-4">
+                            <Skeleton width="100%" height="4rem"></Skeleton>
+                            <Skeleton width="100%" height="4rem"></Skeleton>
+                            <Skeleton width="100%" height="4rem"></Skeleton>
+                            <Skeleton width="100%" height="4rem"></Skeleton>
+                            <Skeleton width="100%" height="4rem"></Skeleton>
+                        </div>
+                        <div className=" tw-mt-4">
+                            <Skeleton width="20rem" height="6rem"></Skeleton>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className="tw-grow tw-p-3 md:tw-p-6 tw-bg-white">
+                    <div id="ref_image"></div>
+                    <div className="tw-my-4 tw-flex tw-items-center tw-justify-center">
+                        <Button
+                            label="Ok"
+                            className="tw-w-40"
+                            pt={{
+                                root: {
+                                    className:
+                                        "tw-bg-[#293986] tw-border-[#293986]",
+                                },
+                            }}
+                            onClick={handleSendReference}
+                            loading={sendMailLoading}
+                        />
+                    </div>
+                </div>
+            )}
         </AppContainer>
     );
 };

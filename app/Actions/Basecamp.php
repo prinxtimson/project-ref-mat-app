@@ -149,8 +149,9 @@ class Basecamp
 
   public function getCandidateCheckins($checkins_url)
   {
-    $url = str_replace('basecamp', 'basecampapi', $checkins_url);
-    $this->response = $this->client->get($url . '/answers.json');
+    $url = str_replace('.json', '/questions.json', $checkins_url);
+    $body = json_decode($this->client->get($url)->getBody(), true);
+    $this->response = $this->client->get($body[0]['answers_url']);
     $payload = $this->getResponse();
     return $payload;
   }

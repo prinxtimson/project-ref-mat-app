@@ -1,7 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
 import { RadioButton } from "primereact/radiobutton";
-import { ProgressBar } from "primereact/progressbar";
 import { Button } from "primereact/button";
 import { FileUpload } from "primereact/fileupload";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { Tag } from "primereact/tag";
 
 const StepTwo = ({
     data,
+    projects,
     handleOnChange,
     handleOnNext,
     handleOnSuccessStoryUpload,
@@ -45,8 +46,6 @@ const StepTwo = ({
     };
 
     const handleFileUpload = (e) => {
-        console.log("uploading");
-
         const formData = new FormData();
         formData.append("_method", "post");
         formData.append("file", e.files[0]);
@@ -72,7 +71,7 @@ const StepTwo = ({
             })
             .catch((error) => {
                 setStatus("error");
-                console.error("File upload failed:", error);
+                console.error("File upload failed:", error.message);
                 toast.current.show({
                     severity: "error",
                     summary: "Error",
@@ -106,12 +105,12 @@ const StepTwo = ({
                     className="tw-flex tw-items-center"
                     style={{ width: "40%" }}
                 >
-                    <img
+                    {/* <img
                         alt={file.name}
                         role="presentation"
                         src={file.objectURL}
                         width={100}
-                    />
+                    /> */}
                     <span className="tw-flex tw-flex-col tw-text-left tw-ml-3">
                         {file.name}
                         <small>{props.formatSize}</small>
@@ -134,7 +133,7 @@ const StepTwo = ({
                     rounded
                     className="p-button-outlined p-button-danger tw-p-4 tw-ml-auto"
                     onClick={() => {
-                        onTemplateRemove(file, props.onRemove);
+                        props.onRemove();
                         handleOnSuccessStoryUpload("");
                     }}
                 />
@@ -152,26 +151,18 @@ const StepTwo = ({
                 }}
             >
                 <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                    <label htmlFor="project_name">Project Name *</label>
-                    <InputText
-                        name="project_name"
-                        value={data.project_name}
+                    <label htmlFor="project">Project Name *</label>
+                    <Dropdown
+                        name="project"
+                        value={data.project}
                         onChange={handleOnChange}
-                        placeholder="Enter Project Name"
+                        placeholder="Select Project"
+                        options={projects}
+                        optionLabel="name"
+                        filter
                         required
+                        virtualScrollerOptions={{ itemSize: 50 }}
                     />
-                </div>
-
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                    <label htmlFor="check_ins_url">Check-ins Url *</label>
-                    <InputText
-                        name="check_ins_url"
-                        value={data.check_ins_url}
-                        onChange={handleOnChange}
-                        placeholder="Enter Check-ins Url"
-                        required
-                    />
-                    <small>copy your check-ins url and paste here</small>
                 </div>
 
                 <div className="tw-flex tw-gap-3 tw-mb-6">
@@ -206,57 +197,13 @@ const StepTwo = ({
 
                 <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="project_role">Select Project Role *</label>
-
-                    <div className="tw-flex tw-flex-col tw-flex-wrap tw-gap-2">
-                        <div className="tw-flex tw-items-center">
-                            <RadioButton
-                                inputId="pm"
-                                name="project_role"
-                                value="PM"
-                                onChange={handleOnChange}
-                                checked={data.project_role === "PM"}
-                            />
-                            <label htmlFor="pm" className="tw-ml-2">
-                                PM
-                            </label>
-                        </div>
-                        <div className="tw-flex tw-items-center">
-                            <RadioButton
-                                inputId="ba"
-                                name="project_role"
-                                value="BA"
-                                onChange={handleOnChange}
-                                checked={data.project_role === "BA"}
-                            />
-                            <label htmlFor="ba" className="tw-ml-2">
-                                BA
-                            </label>
-                        </div>
-                        <div className="tw-flex tw-items-center">
-                            <RadioButton
-                                inputId="pmo"
-                                name="project_role"
-                                value="PMO"
-                                onChange={handleOnChange}
-                                checked={data.project_role === "PMO"}
-                            />
-                            <label htmlFor="pmo" className="tw-ml-2">
-                                PMO
-                            </label>
-                        </div>
-                        <div className="tw-flex tw-items-center">
-                            <RadioButton
-                                inputId="hybrid"
-                                name="project_role"
-                                value="HYBRID"
-                                onChange={handleOnChange}
-                                checked={data.project_role === "HYBRID"}
-                            />
-                            <label htmlFor="hybrid" className="tw-ml-2">
-                                HYBRID
-                            </label>
-                        </div>
-                    </div>
+                    <Dropdown
+                        name="project_role"
+                        value={data.project_role}
+                        options={ROLES}
+                        onChange={handleOnChange}
+                        placeholder="Select Project Role"
+                    />
                 </div>
 
                 <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
@@ -268,7 +215,7 @@ const StepTwo = ({
                     <FileUpload
                         name="file"
                         ref={fileUploadRef}
-                        accept=".mp3,audio/*"
+                        accept=".mp3,.mp4,audio/*"
                         emptyTemplate={emptyTemplate}
                         headerTemplate={headerTemplate}
                         itemTemplate={itemTemplate}
@@ -276,7 +223,9 @@ const StepTwo = ({
                         auto
                         customUpload
                         uploadHandler={handleFileUpload}
-                        chooseOptions={{ className: "tw-bg-[#293986]" }}
+                        chooseOptions={{
+                            className: "tw-bg-[#293986] tw-border-[#293986]",
+                        }}
                     />
                     {/* <div className="tw-flex tw-gap-4 tw-items-center">
                         <small>{file?.name}</small>
@@ -287,10 +236,11 @@ const StepTwo = ({
 
                     <small className="tw-m-0">Max. file size: 6 GB.</small>
                 </div>
-                <div className="tw-flex tw-items-center tw-justify-between">
+                <div className="tw-flex tw-items-center tw-gap-6">
                     <Button
                         label="Previous"
                         outlined
+                        className="tw-w-40"
                         onClick={handlePrevious}
                         pt={{
                             root: {
@@ -316,3 +266,15 @@ const StepTwo = ({
 };
 
 export default StepTwo;
+
+const ROLES = [
+    "Lead Business Analyst",
+    "Deputy Business Analyst",
+    "Project Manager",
+    "Deputy Project Manager",
+    "PMO Lead",
+    "Deputy PMO lead",
+    "PMO",
+    "Project Planner",
+    "Business Analyst",
+];

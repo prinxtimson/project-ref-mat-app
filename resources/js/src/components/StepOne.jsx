@@ -1,5 +1,5 @@
 import { InputText } from "primereact/inputtext";
-import { Calendar } from "primereact/calendar";
+import { RadioButton } from "primereact/radiobutton";
 import { Button } from "primereact/button";
 import { useState } from "react";
 
@@ -32,7 +32,7 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
             >
                 <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
                     <label htmlFor="fullname">Full Name *</label>
-                    <div className="tw-flex tw-gap-3">
+                    <div className="tw-flex tw-gap-4">
                         <InputText
                             name="firstname"
                             value={data.firstname}
@@ -81,26 +81,77 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                         </small>
                     )}
                 </div>
-                <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                    <label htmlFor="date_joined">Date Joined *</label>
-                    <input
-                        type="date"
-                        name="date_joined"
-                        value={data.date_joined}
-                        onChange={handleOnChange}
-                        placeholder="Select Date"
-                        required
-                        className="p-inputtext"
-                    />
-                    {/* <Calendar
-                        name="date_joined"
-                        value={data.date_joined}
-                        onChange={handleOnChange}
-                        showIcon
-                        placeholder="Select Date"
-                        required
-                    /> */}
+
+                <div className="tw-flex tw-gap-3 tw-mb-6">
+                    <label htmlFor="gender">Gender</label>
+                    <div className="tw-flex tw-flex-wrap tw-gap-2">
+                        <div className="tw-flex tw-items-center">
+                            <RadioButton
+                                inputId="male"
+                                name="gender"
+                                value="male"
+                                onChange={handleOnChange}
+                                checked={data.gender === "male"}
+                            />
+                            <label htmlFor="male" className="tw-ml-2">
+                                Male
+                            </label>
+                        </div>
+                        <div className="tw-flex tw-items-center">
+                            <RadioButton
+                                inputId="female"
+                                name="gender"
+                                value="female"
+                                onChange={handleOnChange}
+                                checked={data.gender === "female"}
+                            />
+                            <label htmlFor="no" className="tw-ml-2">
+                                Female
+                            </label>
+                        </div>
+
+                        <div className="tw-flex tw-items-center">
+                            <RadioButton
+                                inputId="others"
+                                name="gender"
+                                value="others"
+                                onChange={handleOnChange}
+                                checked={data.gender === "others"}
+                            />
+                            <label htmlFor="no" className="tw-ml-2">
+                                Others
+                            </label>
+                        </div>
+                    </div>
                 </div>
+
+                <div className="tw-flex tw-items-center tw-gap-4 tw-mb-6">
+                    <div className="tw-grow tw-flex tw-flex-col tw-gap-1">
+                        <label htmlFor="date_joined">Date Joined *</label>
+                        <input
+                            type="date"
+                            name="date_joined"
+                            value={data.date_joined}
+                            onChange={handleOnChange}
+                            placeholder="Select Date"
+                            required
+                            className="p-inputtext "
+                        />
+                    </div>
+                    <div className="tw-grow tw-flex tw-flex-col tw-gap-1">
+                        <label htmlFor="date_left">Date Left *</label>
+                        <input
+                            type="date"
+                            name="date_left"
+                            value={data.date_left}
+                            onChange={handleOnChange}
+                            placeholder="Select Date"
+                            required
+                            className="p-inputtext"
+                        />
+                    </div>
+                </div>
+
                 <div className="tw-flex tw-items-center tw-justify-between">
                     <Button
                         label="Ok"

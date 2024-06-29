@@ -44,7 +44,7 @@
     "src": "node_modules/primereact/resources/themes/soho-light/fonts/lato-v17-latin-ext_latin-regular.woff2"
   },
   "resources/js/app.css": {
-    "file": "assets/app-e2bedaed.css",
+    "file": "assets/app-0b877fe1.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -62,9 +62,9 @@
       "assets/primeicons-36c54cec.svg"
     ],
     "css": [
-      "assets/app-e2bedaed.css"
+      "assets/app-0b877fe1.css"
     ],
-    "file": "assets/app-419b2c95.js",
+    "file": "assets/app-0e3f4e40.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },

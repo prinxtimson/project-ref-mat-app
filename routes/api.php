@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BasecampController;
 use App\Http\Controllers\CandidateDataController;
 use App\Http\Controllers\CandidateReferenceController;
 use App\Http\Controllers\ChatMessageController;
@@ -74,3 +75,7 @@ Route::group(['prefix' => 'posts', 'middleware' => ['auth:sanctum', '2faApi']], 
     Route::put('{id}/restore', [PostController::class, 'restore'])->name('posts.restore');
     Route::delete('{id}/delete', [PostController::class, 'destroy'])->name('posts.delete');
 });
+
+Route::get('basecamp/projects/get', [BasecampController::class, 'getProjects'])->name('basecamp.index')->middleware(['auth:sanctum', '2faApi']);
+
+Route::get('basecamp/projects/set', [BasecampController::class, 'setProjects'])->name('basecamp.projects.set');

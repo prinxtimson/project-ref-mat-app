@@ -11,23 +11,27 @@ import {
     reset,
     clear,
 } from "../../features/reference/refSlice";
+import axios from "axios";
 
 const RequestReferencePage = () => {
     const toastRef = useRef(null);
     const [step, setStep] = useState(1);
+    const [projects, setProjects] = useState([]);
     const [data, setData] = useState({
         firstname: "",
         lastname: "",
         email: "",
         phone_number: "",
         date_joined: "",
+        date_left: "",
         cv: "",
         recruiter_name: "",
         recruiter_email: "",
         position: "",
         success_story: "",
-        project_name: "",
-        check_ins_url: "",
+        project: null,
+        gender: "",
+        project_role: "",
     });
 
     const dispatch = useDispatch();
@@ -60,17 +64,27 @@ const RequestReferencePage = () => {
                 email: "",
                 phone_number: "",
                 date_joined: "",
-                cv: null,
+                date_left: "",
+                cv: "",
                 recruiter_name: "",
                 recruiter_email: "",
                 position: "",
                 success_story: "",
-                project_name: "",
+                project: null,
+                gender: "",
+                project_role: "",
             });
         }
 
         dispatch(reset());
     }, [isError, isSuccess, message, dispatch]);
+
+    useEffect(() => {
+        axios
+            .get("/api/basecamp/projects/get")
+            .then((res) => setProjects(res.data))
+            .catch((err) => console.log(err.message));
+    }, []);
 
     const handleOnChange = (event) => {
         setData({
@@ -93,11 +107,20 @@ const RequestReferencePage = () => {
     const handlePrevious = () => setStep(step - 1);
 
     const handleSubmit = () => {
+        let check_ins_url =
+            data.project.dock.find((val) => val.name == "questionnaire").url ||
+            "";
+
         let formData = new FormData();
 
         formData.append("_method", "post");
+        formData.append("project_name", data.project.name);
+        formData.append("check_ins_url", check_ins_url);
+
         for (const key in data) {
-            formData.append(`${key}`, data[key]);
+            if (key != "project") {
+                formData.append(`${key}`, data[key]);
+            }
         }
 
         dispatch(requestReference(formData));
@@ -118,6 +141,7 @@ const RequestReferencePage = () => {
                     <StepTwo
                         data={data}
                         toast={toastRef}
+                        projects={projects}
                         handleOnChange={handleOnChange}
                         handleOnNext={handleOnNext}
                         handlePrevious={handlePrevious}

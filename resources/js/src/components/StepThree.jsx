@@ -125,6 +125,7 @@ const StepThree = ({
                         label="Previous"
                         outlined
                         onClick={handlePrevious}
+                        className="tw-w-40"
                         pt={{
                             root: {
                                 className:

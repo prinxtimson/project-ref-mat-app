@@ -52,11 +52,11 @@ Route::get('/search', function () {
 });
 
 Route::get('/reference-template/{id}', function ($id) {
-    $candidate_ref = CandidateReference::find($id);
+    $candidate_ref = CandidateReference::find($id)->toArray();
     
-    $candidate_ref->date_joined = Carbon::parse($candidate_ref->date_joined)->format('d M, Y'); 
-    $candidate_ref->created_at = Carbon::parse($candidate_ref->created_at)->format('d M, Y');
-    return view('reference_letter_template', ['user' => $candidate_ref]);
+    $candidate_ref['date_joined'] = Carbon::parse($candidate_ref['date_joined'])->format('d M, Y'); 
+    $candidate_ref['date_left'] = Carbon::parse($candidate_ref['date_left'])->format('d M, Y');
+    return view('reference_letter_template', ['ref' => $candidate_ref]);
 });
 
 

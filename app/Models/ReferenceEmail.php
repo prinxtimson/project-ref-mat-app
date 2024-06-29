@@ -15,4 +15,8 @@ class ReferenceEmail extends Model
         'status',
         'meta_data',
     ];
+
+    protected $casts = [
+        'meta_data' => 'array',
+    ];
 }
