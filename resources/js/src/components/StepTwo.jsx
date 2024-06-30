@@ -134,6 +134,7 @@ const StepTwo = ({
                     className="p-button-outlined p-button-danger tw-p-4 tw-ml-auto"
                     onClick={() => {
                         props.onRemove();
+                        setStatus("pending");
                         handleOnSuccessStoryUpload("");
                     }}
                 />
