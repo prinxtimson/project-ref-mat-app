@@ -134,9 +134,9 @@ class CandidateReferenceController extends Controller
     public function uploadFile(Request $request)
     {
         try{
-            $request->validate([
-                'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
-            ]);
+            // $request->validate([
+            //     'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
+            // ]);
 
             $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
