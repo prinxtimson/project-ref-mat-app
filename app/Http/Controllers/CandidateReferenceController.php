@@ -14,6 +14,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
@@ -132,29 +133,34 @@ class CandidateReferenceController extends Controller
 
     public function uploadFile(Request $request)
     {
-        // $request->validate([
-        //     'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
-        // ]);
+        try{
+            $request->validate([
+                'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
+            ]);
 
-        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+            $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
-        if(!$receiver->isUploaded()){
 
+            if(!$receiver->isUploaded()){
+                throw new UploadMissingFileException();
+            }
+
+            $fileReceived = $receiver->receive();
+            if($fileReceived->isFinished()){
+                $file = $fileReceived->getFile();
+
+                return $this->saveFile($file);
+            }
+
+            $handler = $fileReceived->handler();
+
+            return response()->json([
+                "done" => $handler->getPercentageDone(),
+                'status' => true
+            ]);
+        }catch(Exception $e){
+            return response(['message' => $e->getMessage()], $e->getCode());
         }
-
-        $fileReceived = $receiver->receive();
-        if($fileReceived->isFinished()){
-            $file = $fileReceived->getFile();
-
-            return $this->saveFile($file);
-        }
-
-        $handler = $fileReceived->handler();
-
-        return response()->json([
-            "done" => $handler->getPercentageDone(),
-            'status' => true
-        ]);
     }
 
         /**
