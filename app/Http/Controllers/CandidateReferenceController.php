@@ -159,7 +159,7 @@ class CandidateReferenceController extends Controller
                 'status' => true
             ]);
         }catch(Exception $e){
-            return response(['message' => $e->getMessage()], $e->getCode());
+            return response(['message' => $e->getMessage()], 500);
         }
     }
 
