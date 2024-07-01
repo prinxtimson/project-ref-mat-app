@@ -6,6 +6,7 @@ import { Skeleton } from "primereact/skeleton";
 
 import AppContainer from "../../layouts/AppContainer";
 import axios from "axios";
+import { Toast } from "primereact/toast";
 
 const RefLetterPage = () => {
     const toastRef = useRef();
@@ -47,7 +48,6 @@ const RefLetterPage = () => {
                     detail: "Reference letter sent successful",
                     life: 5000,
                 });
-                navigate("/request-reference");
             })
             .catch((error) => {
                 console.error("Sending failed:", error.message);
@@ -62,7 +62,13 @@ const RefLetterPage = () => {
     };
 
     return (
-        <AppContainer toast={toastRef}>
+        <AppContainer>
+            <Toast
+                ref={toastRef}
+                onHide={() => {
+                    navigate("/request-reference");
+                }}
+            />
             {isLoading ? (
                 <div className="tw-grow tw-p-3 md:tw-p-6 tw-bg-white tw-flex tw-flex-col tw-items-center">
                     <div className="tw-grow tw-w-full tw-max-w-[730px]">

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ProgressBar } from "primereact/progressbar";
 
 import AppContainer from "../../layouts/AppContainer";
@@ -12,6 +13,7 @@ import {
     clear,
 } from "../../features/reference/refSlice";
 import axios from "axios";
+import { Toast } from "primereact/toast";
 
 const RequestReferencePage = () => {
     const toastRef = useRef(null);
@@ -35,8 +37,9 @@ const RequestReferencePage = () => {
     });
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { isLoading, isSuccess, isError, message } = useSelector(
+    const { isLoading, isSuccess, isError, type, message } = useSelector(
         (state) => state.ref
     );
 
@@ -75,8 +78,6 @@ const RequestReferencePage = () => {
                 project_role: "",
             });
         }
-
-        dispatch(reset());
     }, [isError, isSuccess, message, dispatch]);
 
     useEffect(() => {
@@ -165,7 +166,16 @@ const RequestReferencePage = () => {
     };
 
     return (
-        <AppContainer toast={toastRef}>
+        <AppContainer>
+            <Toast
+                ref={toastRef}
+                onHide={() => {
+                    if (type == "ref/request-ref/fulfilled") {
+                        navigate("/ref-letter");
+                    }
+                    dispatch(reset());
+                }}
+            />
             <div className="tw-grow tw-p-3 md:tw-p-6 tw-bg-white">
                 <div className="tw-text-center tw-mb-6">
                     <h1 className="tw-my-0">Candidate Reference Application</h1>

@@ -36,6 +36,8 @@ class CandidateReferenceController extends Controller
     public function store(Request $request)
     {
         try {
+            $user = User::find(auth()->id());
+
             $fields = $request->validate([
                 'firstname' => 'string|required',
                 'lastname' => 'string|required',
@@ -54,15 +56,6 @@ class CandidateReferenceController extends Controller
                 'check_ins_url' => 'string|required'
             ]);
 
-            $checkins = $this->calCheckins($fields);
-            if($checkins['error']){
-                return response(['message' => $checkins['message']], 400);
-            }
-
-            if($checkins['data'] < 20){
-                return response(['message' => "You did not meet up the Project Check-ins requirements"], 400);
-            }
-
             $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
             unset($fields['firstname'], $fields['lastname']);
 
@@ -77,12 +70,21 @@ class CandidateReferenceController extends Controller
                 $fields['cv'] = Storage::url($path);
             }
 
-            $user = User::find(auth()->id());
+            $checkins = $this->calCheckins($fields);
+            if($checkins['error']){
+                return response(['message' => $checkins['message']], 400);
+            }
+
+            if($checkins['data'] < 20){
+                $fields['status'] = '4';
+                $reference = $user->candidate_references()->create($fields);
+                return response(['message' => "Candidate activities level requirements was not met, reference request declined!"], 400);
+            }
 
             $reference = $user->candidate_references()->create($fields);
 
             return response()->json([
-                'message' => 'Refecrence request successful',
+                'message' => 'Candidate activities level requirement met, refecrence request successful!',
                 'data' => $reference
             ]);
         } catch(Exception $e) {

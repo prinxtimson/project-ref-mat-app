@@ -176,7 +176,14 @@ const App = () => {
                             </AuthRoute>
                         }
                     />
-                    <Route path="ref-letter" element={<RefLetterPage />} />
+                    <Route
+                        path="ref-letter"
+                        element={
+                            <AuthRoute>
+                                <RefLetterPage />
+                            </AuthRoute>
+                        }
+                    />
                     <Route
                         path="change-password"
                         element={
