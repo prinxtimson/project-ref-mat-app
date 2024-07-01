@@ -46,6 +46,12 @@ const DataAccessRequestPage = () => {
                         detail: res.data.message,
                         life: 5000,
                     });
+                    setData({
+                        name: "",
+                        email: "",
+                        type: "",
+                        authorization: "",
+                    });
                 })
                 .catch((err) => {
                     setIsLoading(false);
