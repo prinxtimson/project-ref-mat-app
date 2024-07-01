@@ -41,8 +41,8 @@ const DataAccessRequestPage = () => {
                 .then((res) => {
                     setIsLoading(false);
                     toastRef.current.show({
-                        severity: "error",
-                        summary: "Error",
+                        severity: "success",
+                        summary: "Success",
                         detail: res.data.message,
                         life: 5000,
                     });
@@ -148,6 +148,7 @@ const DataAccessRequestPage = () => {
                             <Button
                                 label="Ok"
                                 className="tw-w-40"
+                                loading={isLoading}
                                 pt={{
                                     root: {
                                         className:
