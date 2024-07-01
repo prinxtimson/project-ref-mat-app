@@ -139,7 +139,7 @@ const StepOne = ({ data, handleOnChange, handleOnNext }) => {
                         />
                     </div>
                     <div className="tw-grow tw-flex tw-flex-col tw-gap-1">
-                        <label htmlFor="date_left">Date Left *</label>
+                        <label htmlFor="date_left">End Date *</label>
                         <input
                             type="date"
                             name="date_left"
