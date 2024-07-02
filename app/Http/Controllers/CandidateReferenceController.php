@@ -59,7 +59,6 @@ class CandidateReferenceController extends Controller
             $fields['name'] = $fields['firstname'] . ' ' . $fields['lastname'];
             unset($fields['firstname'], $fields['lastname']);
 
-            $fields['gender'] = $fields['gender'] == 'male' ? 'he' : ($fields['gender'] == 'female' ? 'she' : 'they');
             $fields['date_joined'] =  new Carbon($fields['date_joined']);
             $fields['date_left'] =  new Carbon($fields['date_left']);
 
