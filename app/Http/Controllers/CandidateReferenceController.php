@@ -139,24 +139,32 @@ class CandidateReferenceController extends Controller
             //     'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
             // ]);
 
-            $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+            // $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
 
 
-            if(!$receiver->isUploaded()){
-                throw new UploadMissingFileException();
+            // if(!$receiver->isUploaded()){
+            //     throw new UploadMissingFileException();
+            // }
+
+            // $fileReceived = $receiver->receive();
+            // if($fileReceived->isFinished()){
+            //     $file = $fileReceived->getFile();
+
+            //     return $this->saveFile($file);
+            // }
+
+            // $handler = $fileReceived->handler();
+
+            if ($request->hasFile('file')) {
+                $path = $request->file('file')->store(
+                    'public/success_story'
+                );
+                $fullpath = Storage::url($path);
             }
-
-            $fileReceived = $receiver->receive();
-            if($fileReceived->isFinished()){
-                $file = $fileReceived->getFile();
-
-                return $this->saveFile($file);
-            }
-
-            $handler = $fileReceived->handler();
 
             return response()->json([
-                "done" => $handler->getPercentageDone(),
+               // "done" => $handler->getPercentageDone(),
+               'path' => $fullpath,
                 'status' => true
             ]);
         }catch(Exception $e){
