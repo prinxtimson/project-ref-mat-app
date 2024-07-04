@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-/public/firebase-messaging-sw.js
+/public/*.js
 /storage/*.key
 /vendor
 .env
