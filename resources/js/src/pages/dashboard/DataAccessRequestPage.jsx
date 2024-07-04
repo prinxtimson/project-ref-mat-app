@@ -1,21 +1,35 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "primereact/button";
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { RadioButton } from "primereact/radiobutton";
+import { TabMenu } from "primereact/tabmenu";
 
 import AppContainer from "../../layouts/AppContainer";
 import axios from "axios";
+import PersonalData from "../../components/PersonalData";
+import Rectification from "../../components/Rectification";
+import Restriction from "../../components/Restriction";
+import TransferData from "../../components/TransferData";
+import WithdrawConsent from "../../components/WithdrawConsent";
 
 const DataAccessRequestPage = () => {
     const toastRef = useRef(null);
+    const [activeIndex, setActiveIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const phonePattern = /^[0-9]{10,}$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const [err, setErr] = useState({
+        phone: false,
+        email: false,
+    });
     const [data, setData] = useState({
         name: "",
         email: "",
         type: "",
-        authorization: "",
+        consent: "",
+        description: "",
+        reason: "",
+        recipient_name: "",
+        recipient_email: "",
+        correction: "",
     });
 
     const navigate = useNavigate();
@@ -32,43 +46,59 @@ const DataAccessRequestPage = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        if (data.authorization == "0") {
-            navigate("/");
-        } else {
-            setIsLoading(true);
-            axios
-                .post("/api/data-access", data)
-                .then((res) => {
-                    setIsLoading(false);
-                    toastRef.current.show({
-                        severity: "success",
-                        summary: "Success",
-                        detail: res.data.message,
-                        life: 5000,
-                    });
-                    setData({
-                        name: "",
-                        email: "",
-                        type: "",
-                        authorization: "",
-                    });
-                })
-                .catch((err) => {
-                    setIsLoading(false);
-                    const msg =
-                        (err.response &&
-                            err.response.data &&
-                            err.response.data.message) ||
-                        err.message ||
-                        err.toString();
-                    toastRef.current.show({
-                        severity: "error",
-                        summary: "Error",
-                        detail: msg,
-                        life: 5000,
-                    });
-                });
+        let _phone = data.phone && !phonePattern.test(data.phone);
+        let _recipient_email =
+            data.recipient_email && !emailPattern.test(data.recipient_email);
+        let _email = !emailPattern.test(data.email);
+
+        if (_email || _phone || _recipient_email || !data.consent) {
+            setErr({
+                phone: _phone,
+                email: _email,
+                recipient_email: _recipient_email,
+                consent: !data.consent,
+            });
+            return;
         }
+
+        setIsLoading(true);
+        axios
+            .post("/api/data-access", { ...data, type: activeIndex + 1 })
+            .then((res) => {
+                setIsLoading(false);
+                toastRef.current.show({
+                    severity: "success",
+                    summary: "Success",
+                    detail: res.data.message,
+                    life: 5000,
+                });
+                setData({
+                    name: "",
+                    email: "",
+                    type: "",
+                    consent: "",
+                    description: "",
+                    reason: "",
+                    recipient_name: "",
+                    recipient_email: "",
+                    correction: "",
+                });
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                const msg =
+                    (err.response &&
+                        err.response.data &&
+                        err.response.data.message) ||
+                    err.message ||
+                    err.toString();
+                toastRef.current.show({
+                    severity: "error",
+                    summary: "Error",
+                    detail: msg,
+                    life: 5000,
+                });
+            });
     };
 
     return (
@@ -78,92 +108,67 @@ const DataAccessRequestPage = () => {
                     <h1 className="tw-my-0">Data Subject Access Request</h1>
                 </div>
 
-                <div className="card tw-rounded-lg tw-w-full tw-p-3 sm:tw-p-6 tw-bg-white">
-                    <form className="p-fluid" onSubmit={handleOnSubmit}>
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                            <label htmlFor="fullname">Full Name *</label>
-                            <InputText
-                                name="name"
-                                value={data.name}
-                                onChange={handleOnChange}
-                                placeholder="Full Name"
-                                required
+                <div className="tw-p-4 tw-w-full">
+                    <TabMenu
+                        model={ACCESSOPTIONS}
+                        activeIndex={activeIndex}
+                        onTabChange={(e) => setActiveIndex(e.index)}
+                        pt={{
+                            root: {
+                                className: "tw-text-[#293986]",
+                            },
+                        }}
+                    />
+
+                    <div className="tw-mt-6 tw-text-center">
+                        <h3 className="tw-m-0">
+                            {ACCESSOPTIONS[activeIndex].label}
+                        </h3>
+                    </div>
+
+                    <div className="">
+                        {activeIndex == 0 ? (
+                            <PersonalData
+                                handleOnChange={handleOnChange}
+                                data={data}
+                                handleOnSubmit={handleOnSubmit}
+                                err={err}
+                                isLoading={isLoading}
                             />
-                        </div>
-
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                            <label htmlFor="email">Email *</label>
-                            <InputText
-                                name="email"
-                                value={data.email}
-                                onChange={handleOnChange}
-                                placeholder="Enter Email"
-                                required
+                        ) : activeIndex == 1 ? (
+                            <Rectification
+                                handleOnChange={handleOnChange}
+                                data={data}
+                                handleOnSubmit={handleOnSubmit}
+                                err={err}
+                                isLoading={isLoading}
                             />
-                        </div>
-
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                            <label htmlFor="type">Type of Request *</label>
-                            <Dropdown
-                                name="type"
-                                value={data.type}
-                                options={ACCESSOPTIONS}
-                                onChange={handleOnChange}
-                                placeholder="Select Option"
-                                optionLabel="label"
-                                optionValue="value"
+                        ) : activeIndex == 2 ? (
+                            <Restriction
+                                handleOnChange={handleOnChange}
+                                data={data}
+                                handleOnSubmit={handleOnSubmit}
+                                err={err}
+                                isLoading={isLoading}
                             />
-                        </div>
-
-                        <div className="tw-flex tw-flex-col tw-gap-1 tw-mb-6">
-                            <div className="field-checked tw-flex tw-gap-4 tw-items-start tw-text-gray-900 ">
-                                <label htmlFor="accept" className="tw-mr-2">
-                                    Authorization
-                                </label>
-
-                                <div className="tw-flex  tw-flex-wrap tw-gap-3">
-                                    <div className="tw-flex tw-items-center">
-                                        <RadioButton
-                                            inputId="1"
-                                            name="authorization"
-                                            value="1"
-                                            onChange={handleOnChange}
-                                            checked={data.authorization === "1"}
-                                        />
-                                        <label htmlFor="1" className="tw-ml-1">
-                                            I Agree
-                                        </label>
-                                    </div>
-                                    <div className="tw-flex tw-items-center">
-                                        <RadioButton
-                                            inputId="0"
-                                            name="authorization"
-                                            value="0"
-                                            onChange={handleOnChange}
-                                            checked={data.authorization === "0"}
-                                        />
-                                        <label htmlFor="0" className="tw-ml-1">
-                                            I Disagree
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="tw-flex tw-items-center tw-justify-center">
-                            <Button
-                                label="Ok"
-                                className="tw-w-40"
-                                loading={isLoading}
-                                pt={{
-                                    root: {
-                                        className:
-                                            "tw-bg-[#293986] tw-border-[#293986]",
-                                    },
-                                }}
+                        ) : activeIndex == 3 ? (
+                            <TransferData
+                                handleOnChange={handleOnChange}
+                                data={data}
+                                handleOnSubmit={handleOnSubmit}
+                                err={err}
+                                isLoading={isLoading}
                             />
-                        </div>
-                    </form>
+                        ) : (
+                            <WithdrawConsent
+                                handleOnChange={handleOnChange}
+                                data={data}
+                                handleOnSubmit={handleOnSubmit}
+                                err={err}
+                                isLoading={isLoading}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
         </AppContainer>

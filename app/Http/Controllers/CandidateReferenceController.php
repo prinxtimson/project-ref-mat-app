@@ -134,42 +134,35 @@ class CandidateReferenceController extends Controller
 
     public function uploadFile(Request $request)
     {
-        try{
-            // $request->validate([
-            //     'file' => 'required|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
-            // ]);
+        //try{
+            
+            $request->validate([
+                'audio' => 'required|file|max:6442450944|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav,mp4'
+            ]);
+            dd($request->get('audio'));
+            $receiver = new FileReceiver('audio', $request, HandlerFactory::classFromRequest($request));
 
-            // $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
-
-
-            // if(!$receiver->isUploaded()){
-            //     throw new UploadMissingFileException();
-            // }
-
-            // $fileReceived = $receiver->receive();
-            // if($fileReceived->isFinished()){
-            //     $file = $fileReceived->getFile();
-
-            //     return $this->saveFile($file);
-            // }
-
-            // $handler = $fileReceived->handler();
-
-            if ($request->hasFile('file')) {
-                $path = $request->file('file')->store(
-                    'public/success_story'
-                );
-                $fullpath = Storage::url($path);
+            if(!$receiver->isUploaded()){
+                throw new UploadMissingFileException();
             }
 
+            $fileReceived = $receiver->receive();
+            if($fileReceived->isFinished()){
+                $file = $fileReceived->getFile();
+
+                return $this->saveFile($file);
+            }
+
+            $handler = $fileReceived->handler();
+
             return response()->json([
-               // "done" => $handler->getPercentageDone(),
-               'path' => $fullpath,
+                "done" => $handler->getPercentageDone(),
                 'status' => true
-            ]);
-        }catch(Exception $e){
-            return response(['message' => $e->getMessage()], 500);
-        }
+             ]);
+
+        // }catch(Exception $e){
+        //     return response(['message' => $e->getMessage()], 500);
+        // }
     }
 
         /**

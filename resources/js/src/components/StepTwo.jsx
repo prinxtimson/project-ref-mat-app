@@ -46,9 +46,9 @@ const StepTwo = ({
     };
 
     const handleFileUpload = (e) => {
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append("_method", "post");
-        formData.append("file", e.files[0]);
+        formData.append("audio", e.files[0]);
         // Make a file upload request
         axios
             .post("/api/reference/upload", formData, {

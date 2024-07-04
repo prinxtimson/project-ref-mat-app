@@ -7,13 +7,13 @@ import {
     isSupported,
 } from "firebase/messaging";
 const firebaseConfig = {
-    apiKey: "AIzaSyAVoEVkkSQeAJk6J_6tK74ySVTZlfPUeS4",
-    authDomain: "sparklab-7b0a5.firebaseapp.com",
-    projectId: "sparklab-7b0a5",
-    storageBucket: "sparklab-7b0a5.appspot.com",
-    messagingSenderId: "476562085444",
-    appId: "1:476562085444:web:65bf782c67352ac2d2ce11",
-    measurementId: "G-JET9WHJJ8Y",
+    apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_SENDERID,
+    appId: import.meta.env.VITE_FIREBASE_APPID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENTID,
 };
 
 export const app = initializeApp(firebaseConfig);
